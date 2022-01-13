@@ -1,7 +1,7 @@
 # Stack Choices
 
-React
-Rails
-PostgreSQL
-MaterialUI
-Storybook
+- React
+- Rails
+- PostgreSQL
+- MaterialUI
+- Storybook
