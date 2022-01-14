@@ -31,6 +31,10 @@ export const StopSearch = (props) => {
   );
 };
 
+StopSearch.propTypes = {
+  onClick: PropTypes.func,
+};
+
 Button.defaultProps = {
   onClick: undefined,
 };
