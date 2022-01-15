@@ -4,7 +4,9 @@ import { useSelector } from 'react-redux';
 import { Box, TextField, Button, Autocomplete } from '@mui/material';
 
 export const StopSearch = (props) => {
-  const results = useSelector((state) => state.stopResults.value);
+  const autocomplete = useSelector(
+    (state) => state.stopResults.autocompleteResults
+  );
   const [stop, setstop] = React.useState('');
 
   return (
@@ -12,13 +14,13 @@ export const StopSearch = (props) => {
       <Autocomplete
         inputValue={stop}
         onInputChange={(event, newValue) => {
-          props.onSearch(stop);
+          props.onSearch(stop, true);
           setstop(newValue);
         }}
         sx={{ width: 320 }}
         size="small"
         freeSolo
-        options={results}
+        options={autocomplete}
         getOptionLabel={(option) => option.stop_name}
         renderInput={(params) => <TextField {...params} label="Stop" />}
         filterOptions={(x) => x}
@@ -27,7 +29,7 @@ export const StopSearch = (props) => {
         sx={{ mx: 1, py: 1 }}
         variant="contained"
         disableElevation
-        onClick={() => props.onSearch(stop)}
+        onClick={() => props.onSearch(stop, false)}
       >
         Search
       </Button>

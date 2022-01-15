@@ -4,13 +4,16 @@ import axios from 'axios';
 import { Box } from '@mui/material';
 import { StopSearch } from './components/StopSearch';
 import { StopResults } from './components/StopResults';
-import { setResults } from './components/stopResultsSlice';
+import {
+  setSearchResults,
+  setAutocompleteResults,
+} from './components/stopResultsSlice';
 import { useDispatch } from 'react-redux';
 
 function App() {
   const dispatch = useDispatch();
 
-  function searchStop(name) {
+  function searchStop(name, autocomp) {
     const transit = 'o-c3x-edmontontransitservice';
     const key = process.env.REACT_APP_TRANSITLAND_KEY;
     axios
@@ -19,7 +22,11 @@ function App() {
       )
       .then(function (res) {
         // set results to state
-        dispatch(setResults(res.data.stops));
+        if (autocomp) {
+          dispatch(setAutocompleteResults(res.data.stops));
+        } else {
+          dispatch(setSearchResults(res.data.stops));
+        }
       });
   }
 

@@ -3,16 +3,21 @@ import { createSlice } from '@reduxjs/toolkit';
 export const stopResultsSlice = createSlice({
   name: 'stopResults',
   initialState: {
-    value: [],
+    searchResults: [],
+    autocompleteResults: [],
   },
   reducers: {
-    setResults: (state, action) => {
-      state.value = action.payload;
+    setSearchResults: (state, action) => {
+      state.searchResults = action.payload;
+    },
+    setAutocompleteResults: (state, action) => {
+      state.autocompleteResults = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setResults } = stopResultsSlice.actions;
+export const { setSearchResults, setAutocompleteResults } =
+  stopResultsSlice.actions;
 
 export default stopResultsSlice.reducer;
