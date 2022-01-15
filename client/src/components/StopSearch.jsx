@@ -11,22 +11,27 @@ export const StopSearch = (props) => {
     (state) => state.stopResults.autocompleteResults
   );
   const [stop, setStop] = React.useState('');
+  const timeout = React.useRef();
 
   function searchStop(name, autocomp) {
+    clearTimeout(timeout.current);
     const transit = 'o-c3x-edmontontransitservice';
     const key = process.env.REACT_APP_TRANSITLAND_KEY;
     const url = `https://transit.land/api/v2/rest/stops?api_key=${key}&served_by_onestop_ids=${transit}&search=${name}`;
 
-    if (name.length > 0) {
-      axios.get(url).then((res) => {
-        // set results to state
-        if (autocomp) {
-          dispatch(setAutocompleteResults(res.data.stops));
-        } else {
-          dispatch(setSearchResults(res.data.stops));
-        }
-      });
-    }
+    timeout.current = setTimeout(() => {
+      if (name.length > 0) {
+        axios.get(url).then((res) => {
+          // set results to state
+          if (autocomp) {
+            dispatch(setAutocompleteResults([]));
+            dispatch(setAutocompleteResults(res.data.stops));
+          } else {
+            dispatch(setSearchResults(res.data.stops));
+          }
+        });
+      }
+    }, 150);
   }
 
   return (
@@ -34,9 +39,12 @@ export const StopSearch = (props) => {
       <Autocomplete
         inputValue={stop}
         onInputChange={(event, newValue) => {
-          dispatch(setAutocompleteResults([]));
           setStop(newValue);
           searchStop(newValue, true);
+
+          if (newValue.length === 0) {
+            dispatch(setAutocompleteResults([]));
+          }
         }}
         sx={{ width: 320 }}
         size="small"
