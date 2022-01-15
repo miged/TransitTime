@@ -10,8 +10,8 @@ function App() {
       <h1>Transit App</h1>
       <Box sx={{ m: 1, display: 'flex', justifyContent: 'center' }}>
         <StopSearch />
-        <StopResults />
       </Box>
+      <StopResults />
     </main>
   );
 }

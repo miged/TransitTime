@@ -17,14 +17,16 @@ export const StopSearch = (props) => {
     const key = process.env.REACT_APP_TRANSITLAND_KEY;
     const url = `https://transit.land/api/v2/rest/stops?api_key=${key}&served_by_onestop_ids=${transit}&search=${name}`;
 
-    axios.get(url).then((res) => {
-      // set results to state
-      if (autocomp) {
-        dispatch(setAutocompleteResults(res.data.stops));
-      } else {
-        dispatch(setSearchResults(res.data.stops));
-      }
-    });
+    if (name.length > 0) {
+      axios.get(url).then((res) => {
+        // set results to state
+        if (autocomp) {
+          dispatch(setAutocompleteResults(res.data.stops));
+        } else {
+          dispatch(setSearchResults(res.data.stops));
+        }
+      });
+    }
   }
 
   return (
@@ -33,8 +35,8 @@ export const StopSearch = (props) => {
         inputValue={stop}
         onInputChange={(event, newValue) => {
           dispatch(setAutocompleteResults([]));
-          searchStop(stop, true);
           setStop(newValue);
+          searchStop(newValue, true);
         }}
         sx={{ width: 320 }}
         size="small"
