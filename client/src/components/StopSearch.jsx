@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Box, TextField, Button, Autocomplete } from '@mui/material';
 
 export const StopSearch = (props) => {
-  const [spot, setSpot] = React.useState('');
+  const [stop, setstop] = React.useState('');
 
   // placeholder data
   const stops = [
@@ -15,9 +15,9 @@ export const StopSearch = (props) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Autocomplete
-        inputValue={spot}
+        inputValue={stop}
         onInputChange={(event, newValue) => {
-          setSpot(newValue);
+          setstop(newValue);
         }}
         sx={{ width: 250 }}
         size="small"
@@ -29,7 +29,7 @@ export const StopSearch = (props) => {
         sx={{ mx: 1, py: 1 }}
         variant="contained"
         disableElevation
-        onClick={() => props.onSearch(spot)}
+        onClick={() => props.onSearch(stop)}
       >
         Search
       </Button>
