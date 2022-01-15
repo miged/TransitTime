@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import { Box, TextField, Button, Autocomplete } from '@mui/material';
 import { setSearchResults, setAutocompleteResults } from './stopResultsSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const StopSearch = (props) => {
   const dispatch = useDispatch();
@@ -16,18 +15,16 @@ export const StopSearch = (props) => {
   function searchStop(name, autocomp) {
     const transit = 'o-c3x-edmontontransitservice';
     const key = process.env.REACT_APP_TRANSITLAND_KEY;
-    axios
-      .get(
-        `https://transit.land/api/v2/rest/stops?api_key=${key}&served_by_onestop_ids=${transit}&search=${name}`
-      )
-      .then(function (res) {
-        // set results to state
-        if (autocomp) {
-          dispatch(setAutocompleteResults(res.data.stops));
-        } else {
-          dispatch(setSearchResults(res.data.stops));
-        }
-      });
+    const url = `https://transit.land/api/v2/rest/stops?api_key=${key}&served_by_onestop_ids=${transit}&search=${name}`;
+
+    axios.get(url).then((res) => {
+      // set results to state
+      if (autocomp) {
+        dispatch(setAutocompleteResults(res.data.stops));
+      } else {
+        dispatch(setSearchResults(res.data.stops));
+      }
+    });
   }
 
   return (
