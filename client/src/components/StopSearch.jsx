@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Box, TextField, Button, Autocomplete } from '@mui/material';
+import {
+  Box,
+  TextField,
+  Button,
+  Autocomplete,
+  CircularProgress,
+} from '@mui/material';
 import { setSearchResults, setAutocompleteResults } from './stopResultsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,8 +16,10 @@ export const StopSearch = (props) => {
   const autocomplete = useSelector(
     (state) => state.stopResults.autocompleteResults
   );
-  const [stop, setStop] = React.useState('');
   const timeout = React.useRef();
+
+  const [stop, setStop] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
 
   function searchStop(name, autocomp) {
     clearTimeout(timeout.current);
@@ -34,7 +42,7 @@ export const StopSearch = (props) => {
             dispatch(setAutocompleteResults([]));
             dispatch(setAutocompleteResults(stops));
           } else {
-            dispatch(setSearchResults([]));
+            setLoading(false);
             dispatch(setSearchResults(stops));
           }
         });
@@ -43,33 +51,42 @@ export const StopSearch = (props) => {
   }
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Autocomplete
-        inputValue={stop}
-        onInputChange={(event, newValue) => {
-          setStop(newValue);
-          searchStop(newValue, true);
+    <Box>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Autocomplete
+          inputValue={stop}
+          onInputChange={(event, newValue) => {
+            setStop(newValue);
+            searchStop(newValue, true);
 
-          if (newValue.length === 0) {
-            dispatch(setAutocompleteResults([]));
-          }
-        }}
-        sx={{ width: 360 }}
-        size="small"
-        freeSolo
-        options={autocomplete}
-        getOptionLabel={(o) => `${o.stop_id} - ${o.stop_name}`}
-        renderInput={(params) => <TextField {...params} label="Stop ID/Name" />}
-        filterOptions={(x) => x}
-      />
-      <Button
-        sx={{ mx: 1, py: 1 }}
-        variant="contained"
-        disableElevation
-        onClick={() => searchStop(stop, false)}
-      >
-        Search
-      </Button>
+            if (newValue.length === 0) {
+              dispatch(setAutocompleteResults([]));
+            }
+          }}
+          sx={{ width: 360 }}
+          size="small"
+          freeSolo
+          options={autocomplete}
+          getOptionLabel={(o) => `${o.stop_id} - ${o.stop_name}`}
+          renderInput={(params) => (
+            <TextField {...params} label="Stop ID/Name" />
+          )}
+          filterOptions={(x) => x}
+        />
+        <Button
+          sx={{ mx: 1, py: 1 }}
+          variant="contained"
+          disableElevation
+          onClick={() => {
+            setLoading(true);
+            dispatch(setSearchResults([]));
+            searchStop(stop, false);
+          }}
+        >
+          Search
+        </Button>
+      </Box>
+      {loading && <CircularProgress sx={{ my: 1 }} />}
     </Box>
   );
 };
