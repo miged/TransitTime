@@ -18,7 +18,9 @@ export const StopCard = (props) => {
             alignContent: 'center',
           }}
         >
-          <Typography>{props.stop_name}</Typography>
+          <Typography>
+            {props.stop_name} ({props.stop_id})
+          </Typography>
           <Typography>{props.route_name}</Typography>
         </Box>
       </Box>

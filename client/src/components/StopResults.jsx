@@ -11,6 +11,7 @@ export const StopResults = (props) => {
         <StopCard
           sx={{ my: 1 }}
           key={s.id + r.route.route_short_name}
+          stop_id={s.stop_id}
           stop_name={s.stop_name}
           route_id={r.route.route_short_name}
           route_name={r.route.route_long_name}
