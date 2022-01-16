@@ -59,7 +59,7 @@ export const StopSearch = (props) => {
         freeSolo
         options={autocomplete}
         getOptionLabel={(o) => `${o.stop_id} - ${o.stop_name}`}
-        renderInput={(params) => <TextField {...params} label="Stop" />}
+        renderInput={(params) => <TextField {...params} label="Stop ID/Name" />}
         filterOptions={(x) => x}
       />
       <Button
