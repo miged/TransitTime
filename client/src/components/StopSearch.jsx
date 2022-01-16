@@ -23,12 +23,16 @@ export const StopSearch = (props) => {
       if (name.length > 0) {
         axios.get(url).then((res) => {
           const stops = res.data.stops.filter((s) => {
-            return s.stop_name.toLowerCase().includes(name.toLowerCase());
+            const stop_name = name.split('-')[0].toLowerCase().trim();
+            return (
+              s.stop_id.toLowerCase().includes(stop_name) ||
+              s.stop_name.toLowerCase().includes(stop_name)
+            );
           });
           // set results to state
           if (autocomp) {
             dispatch(setAutocompleteResults([]));
-            dispatch(setAutocompleteResults(res.data.stops));
+            dispatch(setAutocompleteResults(stops));
           } else {
             dispatch(setSearchResults([]));
             dispatch(setSearchResults(stops));
@@ -50,12 +54,12 @@ export const StopSearch = (props) => {
             dispatch(setAutocompleteResults([]));
           }
         }}
-        sx={{ width: 320 }}
+        sx={{ width: 360 }}
         size="small"
         freeSolo
         options={autocomplete}
-        getOptionLabel={(option) => option.stop_name}
-        renderInput={(params) => <TextField {...params} label="Stop" />}
+        getOptionLabel={(o) => `${o.stop_id} - ${o.stop_name}`}
+        renderInput={(params) => <TextField {...params} label="Stop ID/Name" />}
         filterOptions={(x) => x}
       />
       <Button
