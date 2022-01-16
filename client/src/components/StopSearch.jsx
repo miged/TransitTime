@@ -22,12 +22,16 @@ export const StopSearch = (props) => {
     timeout.current = setTimeout(() => {
       if (name.length > 0) {
         axios.get(url).then((res) => {
+          const stops = res.data.stops.filter((s) => {
+            return s.stop_name.toLowerCase().includes(name.toLowerCase());
+          });
           // set results to state
           if (autocomp) {
             dispatch(setAutocompleteResults([]));
             dispatch(setAutocompleteResults(res.data.stops));
           } else {
-            dispatch(setSearchResults(res.data.stops));
+            dispatch(setSearchResults([]));
+            dispatch(setSearchResults(stops));
           }
         });
       }
