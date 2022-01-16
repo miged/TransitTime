@@ -20,3 +20,8 @@
 .MuiButton-root {
   text-transform: unset !important;
 }
+
+#map {
+  height: 400px;
+  width: 400px;
+}
