@@ -11,7 +11,15 @@ function App() {
       <Box sx={{ m: 1, display: 'flex', justifyContent: 'center' }}>
         <StopSearch />
       </Box>
-      <StopResults />
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+        }}
+      >
+        <StopResults />
+      </Box>
     </main>
   );
 }
