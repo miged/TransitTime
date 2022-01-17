@@ -78,9 +78,11 @@ export const StopSearch = (props) => {
           variant="contained"
           disableElevation
           onClick={() => {
-            setLoading(true);
-            dispatch(setSearchResults([]));
-            searchStop(stop, false);
+            if (stop.length !== 0) {
+              setLoading(true);
+              dispatch(setSearchResults([]));
+              searchStop(stop, false);
+            }
           }}
         >
           Search
