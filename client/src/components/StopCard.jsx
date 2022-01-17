@@ -5,7 +5,7 @@ import { Card, Typography, Box } from '@mui/material';
 export const StopCard = (props) => {
   console.log(props);
   return (
-    <Card sx={{ width: 420, p: 2, ...props.sx }} variant="outlined">
+    <Card sx={{ width: 480, p: 2, ...props.sx }} variant="outlined">
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Box sx={{ mr: 2, width: 50 }}>
           <Typography sx={{ fontSize: 24 }}>{props.route_id}</Typography>
