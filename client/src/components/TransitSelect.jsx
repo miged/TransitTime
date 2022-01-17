@@ -2,7 +2,6 @@ import React from 'react';
 import { Autocomplete, TextField } from '@mui/material';
 import { setTransitId } from '../app/transitSlice';
 import { useDispatch } from 'react-redux';
-import { getThemeProps } from '@mui/system';
 
 export const TransitSelect = (props) => {
   const dispatch = useDispatch();
