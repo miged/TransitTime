@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { setSearchResults } from './stopResultsSlice';
+import { setSearchResults } from '../app/stopResultsSlice';
 
 export const StopSearchNearby = (props) => {
   const dispatch = useDispatch();
@@ -21,6 +21,7 @@ export const StopSearchNearby = (props) => {
     const url = `https://transit.land/api/v2/rest/stops?api_key=${key}&lat=${latitude}&lon=${longitude}&radius=750`;
 
     axios.get(url).then((res) => {
+      console.log(res.data.stops);
       dispatch(setSearchResults(res.data.stops));
       props.setLoading(false);
     });

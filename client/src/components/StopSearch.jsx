@@ -8,7 +8,10 @@ import {
   Autocomplete,
   CircularProgress,
 } from '@mui/material';
-import { setSearchResults, setAutocompleteResults } from './stopResultsSlice';
+import {
+  setSearchResults,
+  setAutocompleteResults,
+} from '../app/stopResultsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { StopSearchNearby } from './StopSearchNearby';
 
@@ -17,6 +20,7 @@ export const StopSearch = (props) => {
   const autocomplete = useSelector(
     (state) => state.stopResults.autocompleteResults
   );
+  const transit = useSelector((state) => state.transit.id);
   const timeout = React.useRef();
 
   const [stop, setStop] = React.useState('');
@@ -24,7 +28,6 @@ export const StopSearch = (props) => {
 
   function searchStop(name, autocomp) {
     clearTimeout(timeout.current);
-    const transit = 'o-c3x-edmontontransitservice';
     const key = process.env.REACT_APP_TRANSITLAND_KEY;
     const url = `https://transit.land/api/v2/rest/stops?api_key=${key}&served_by_onestop_ids=${transit}&search=${name}`;
 
