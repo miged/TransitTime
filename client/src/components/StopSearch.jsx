@@ -8,7 +8,10 @@ import {
   Autocomplete,
   CircularProgress,
 } from '@mui/material';
-import { setSearchResults, setAutocompleteResults } from './stopResultsSlice';
+import {
+  setSearchResults,
+  setAutocompleteResults,
+} from '../app/stopResultsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { StopSearchNearby } from './StopSearchNearby';
 
