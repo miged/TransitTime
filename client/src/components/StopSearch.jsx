@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { setSearchResults, setAutocompleteResults } from './stopResultsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { StopSearchNearby } from './StopSearchNearby';
 
 export const StopSearch = (props) => {
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ export const StopSearch = (props) => {
     <Box>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Autocomplete
+          sx={{ width: 370 }}
           inputValue={stop}
           onInputChange={(event, newValue) => {
             setStop(newValue);
@@ -63,7 +65,6 @@ export const StopSearch = (props) => {
               dispatch(setAutocompleteResults([]));
             }
           }}
-          sx={{ width: 360 }}
           size="small"
           freeSolo
           options={autocomplete}
@@ -85,6 +86,9 @@ export const StopSearch = (props) => {
         >
           Search
         </Button>
+      </Box>
+      <Box sx={{ my: 1 }}>
+        <StopSearchNearby setLoading={setLoading} />
       </Box>
       {loading && <CircularProgress sx={{ my: 1 }} />}
     </Box>
