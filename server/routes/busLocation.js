@@ -19,9 +19,8 @@ module.exports = () => {
         const feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(
           res.data
         );
-        data["position"] = feed.entity[0]["vehicle"]["position"];
+        data["position"] = feed.entity[4]["vehicle"]["position"];
         console.log(data);
-        // console.log(feed.entity[0]);
       })
       .then(() => res.json(data))
       .catch(function (error) {
