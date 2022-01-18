@@ -6,30 +6,31 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 export const FavouriteButton = (props) => {
   const cookies = new Cookies();
+  const faveCookies = 'favourites';
 
   function addFavourite(fave) {
-    const faves = cookies.get('favourites');
+    const faves = cookies.get(faveCookies);
     faves.push(fave);
-    cookies.set('favourites', faves);
+    cookies.set(faveCookies, faves);
   }
 
   function removeFavourite(fave) {
-    const faves = cookies.get('favourites');
+    const faves = cookies.get(faveCookies);
     const filtered = faves.filter(
       (f) => JSON.stringify(f) !== JSON.stringify(fave)
     );
-    cookies.set('favourites', filtered);
+    cookies.set(faveCookies, filtered);
   }
 
   function isFavourited(fave) {
-    const faves = cookies.get('favourites');
+    const faves = cookies.get(faveCookies);
     return faves.find((f) => JSON.stringify(f) === JSON.stringify(fave));
   }
 
   function favouriteClick(stop, route) {
     // initialise cookie
-    if (!cookies.get('favourites')) {
-      cookies.set('favourites', []);
+    if (!cookies.get(faveCookies)) {
+      cookies.set(faveCookies, []);
     }
 
     const fave = { stop, route };
@@ -39,7 +40,7 @@ export const FavouriteButton = (props) => {
       removeFavourite(fave);
     }
 
-    console.log(cookies.get('favourites'));
+    console.log(cookies.get(faveCookies));
   }
 
   return (
