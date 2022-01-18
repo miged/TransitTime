@@ -1,12 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Cookies } from 'react-cookie';
+import { useDispatch } from 'react-redux';
+import { setFavourites } from '../app/stopResultsSlice';
 import { IconButton } from '@mui/material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
 
 export const FavouriteButton = (props) => {
   const cookies = new Cookies();
   const faveCookies = 'favourites';
+  const [clicked, setClick] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isFavourited({ stop: props.id, route: props.route_id })) {
+      setClick(true);
+    }
+  }, []);
 
   function addFavourite(fave) {
     const faves = cookies.get(faveCookies);
@@ -34,6 +44,7 @@ export const FavouriteButton = (props) => {
     }
 
     const fave = { stop, route };
+    setClick(!clicked);
     if (!isFavourited(fave)) {
       addFavourite(fave);
     } else {
@@ -49,7 +60,7 @@ export const FavouriteButton = (props) => {
       color="primary"
       onClick={() => favouriteClick(props.id, props.route_id)}
     >
-      <StarBorderIcon />
+      {clicked ? <StarIcon /> : <StarBorderIcon />}
     </IconButton>
   );
 };
