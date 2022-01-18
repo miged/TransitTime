@@ -1,12 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Typography, Box } from '@mui/material';
+import { Box, Card, Typography, IconButton } from '@mui/material';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { Cookies } from 'react-cookie';
 
 export const StopCard = (props) => {
-  console.log(props);
+  const cookies = new Cookies();
+
+  function addFavourite(stop_id, route_id) {
+    // initialise cookie
+    if (!cookies.get('favourites')) {
+      cookies.set('favourites', []);
+    }
+
+    const faves = cookies.get('favourites');
+    if (!faves.find((f) => f.route === route_id && f.stop === stop_id)) {
+      // save to cookie
+      faves.push({ stop: stop_id, route: route_id });
+      cookies.set('favourites', faves);
+    }
+
+    console.log(cookies.get('favourites'));
+  }
+
   return (
-    <Card sx={{ width: 480, p: 2, ...props.sx }} variant="outlined">
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <Card sx={{ width: 500, p: 2, ...props.sx }} variant="outlined">
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
         <Box sx={{ mr: 2, width: 50 }}>
           <Typography sx={{ fontSize: 24 }}>{props.route_id}</Typography>
         </Box>
@@ -16,6 +41,7 @@ export const StopCard = (props) => {
             flexDirection: 'column',
             alignItems: 'flex-start',
             alignContent: 'center',
+            flexGrow: 1,
           }}
         >
           <Typography>
@@ -23,6 +49,13 @@ export const StopCard = (props) => {
           </Typography>
           <Typography>{props.route_name}</Typography>
         </Box>
+        <IconButton
+          aria-label="fav"
+          color="primary"
+          onClick={() => addFavourite(props.stop_id, props.route_id)}
+        >
+          <StarBorderIcon />
+        </IconButton>
       </Box>
     </Card>
   );

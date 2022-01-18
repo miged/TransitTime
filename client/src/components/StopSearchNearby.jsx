@@ -28,13 +28,7 @@ export const StopSearchNearby = (props) => {
   }
 
   return (
-    <Button
-      variant="contained"
-      disableElevation
-      onClick={() => {
-        getLocation();
-      }}
-    >
+    <Button variant="contained" disableElevation onClick={getLocation}>
       Search Nearby
     </Button>
   );
