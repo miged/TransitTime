@@ -7,35 +7,45 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 export const FavouriteButton = (props) => {
   const cookies = new Cookies();
 
-  function addFavourite(stop_id, route_id) {
+  function addFavourite(fave) {
+    const faves = cookies.get('favourites');
+
+    // save to cookie
+    faves.push(fave);
+    cookies.set('favourites', faves);
+  }
+
+  function removeFavourite(fave) {
+    const faves = cookies.get('favourites');
+    const filtered = faves.filter((f) => {
+      return JSON.stringify(f) !== JSON.stringify(fave);
+    });
+    cookies.set('favourites', filtered);
+  }
+
+  function favouriteClick(stop, route) {
     // initialise cookie
     if (!cookies.get('favourites')) {
       cookies.set('favourites', []);
     }
 
     const faves = cookies.get('favourites');
-    if (!faves.find((f) => f.route === route_id && f.stop === stop_id)) {
-      // save to cookie
-      faves.push({ stop: stop_id, route: route_id });
-      cookies.set('favourites', faves);
+    const fave = { stop, route };
+
+    if (!faves.find((f) => JSON.stringify(f) === JSON.stringify(fave))) {
+      addFavourite(fave);
+    } else {
+      removeFavourite(fave);
     }
 
     console.log(cookies.get('favourites'));
-  }
-
-  function getFavourite() {
-    //
-  }
-
-  function removeFavourite() {
-    //
   }
 
   return (
     <IconButton
       aria-label="fav"
       color="primary"
-      onClick={() => addFavourite(props.id, props.route_id)}
+      onClick={() => favouriteClick(props.id, props.route_id)}
     >
       <StarBorderIcon />
     </IconButton>
