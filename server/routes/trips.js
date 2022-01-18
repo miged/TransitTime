@@ -30,7 +30,7 @@ module.exports = () => {
         const array = []
         const stopData = feed.entity.forEach((e) => {
           e.tripUpdate.stopTimeUpdate.forEach((s) => {
-            if (s.stopId === "5359" && e.tripUpdate.trip.routeId === "004") {
+            if (s.stopId === req.query.stop_id && e.tripUpdate.trip.routeId === req.query.route_id) {
               const myDate = new Date(s.departure.time.low *1000)
               const busHMS = myDate.toLocaleTimeString('en-GB', { timeZone: 'America/Edmonton', hour12: false })
               const a = busHMS.split(':');
