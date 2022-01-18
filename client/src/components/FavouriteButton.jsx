@@ -9,18 +9,21 @@ export const FavouriteButton = (props) => {
 
   function addFavourite(fave) {
     const faves = cookies.get('favourites');
-
-    // save to cookie
     faves.push(fave);
     cookies.set('favourites', faves);
   }
 
   function removeFavourite(fave) {
     const faves = cookies.get('favourites');
-    const filtered = faves.filter((f) => {
-      return JSON.stringify(f) !== JSON.stringify(fave);
-    });
+    const filtered = faves.filter(
+      (f) => JSON.stringify(f) !== JSON.stringify(fave)
+    );
     cookies.set('favourites', filtered);
+  }
+
+  function isFavourited(fave) {
+    const faves = cookies.get('favourites');
+    return faves.find((f) => JSON.stringify(f) === JSON.stringify(fave));
   }
 
   function favouriteClick(stop, route) {
@@ -29,10 +32,8 @@ export const FavouriteButton = (props) => {
       cookies.set('favourites', []);
     }
 
-    const faves = cookies.get('favourites');
     const fave = { stop, route };
-
-    if (!faves.find((f) => JSON.stringify(f) === JSON.stringify(fave))) {
+    if (!isFavourited(fave)) {
       addFavourite(fave);
     } else {
       removeFavourite(fave);
