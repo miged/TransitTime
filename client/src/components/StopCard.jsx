@@ -1,28 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Card, Typography, IconButton } from '@mui/material';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { Cookies } from 'react-cookie';
+import { Box, Card, Typography } from '@mui/material';
+import { FavouriteButton } from './FavouriteButton';
 
 export const StopCard = (props) => {
-  const cookies = new Cookies();
-
-  function addFavourite(stop_id, route_id) {
-    // initialise cookie
-    if (!cookies.get('favourites')) {
-      cookies.set('favourites', []);
-    }
-
-    const faves = cookies.get('favourites');
-    if (!faves.find((f) => f.route === route_id && f.stop === stop_id)) {
-      // save to cookie
-      faves.push({ stop: stop_id, route: route_id });
-      cookies.set('favourites', faves);
-    }
-
-    console.log(cookies.get('favourites'));
-  }
-
   return (
     <Card sx={{ width: 500, p: 2, ...props.sx }} variant="outlined">
       <Box
@@ -49,13 +30,7 @@ export const StopCard = (props) => {
           </Typography>
           <Typography>{props.route_name}</Typography>
         </Box>
-        <IconButton
-          aria-label="fav"
-          color="primary"
-          onClick={() => addFavourite(props.stop_id, props.route_id)}
-        >
-          <StarBorderIcon />
-        </IconButton>
+        <FavouriteButton id={props.id} route_id={props.route_id} />
       </Box>
     </Card>
   );
