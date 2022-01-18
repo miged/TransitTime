@@ -13,10 +13,11 @@ app.use(express.static("public"));
 
 // Separated Routes for each Resource
 const usersRoutes = require("./routes/users");
+const busLocationRoutes = require("./routes/busLocation");
 const tripsRoutes = require("./routes/trips");
 
-// Mount all resource routes
 app.use("/api/users", usersRoutes());
+app.use("/api/busLocation", busLocationRoutes());
 app.use("/api/trips", tripsRoutes());
 
 // Home page
