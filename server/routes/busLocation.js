@@ -4,9 +4,9 @@ const router = express.Router();
 const GtfsRealtimeBindings = require("gtfs-realtime-bindings");
 
 module.exports = () => {
-  let data = {};
-
   router.get("/", (req, res) => {
+    let data = {};
+
     const url =
       "http://gtfs.edmonton.ca/TMGTFSRealTimeWebService/Vehicle/VehiclePositions.pb";
 
