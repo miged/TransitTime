@@ -11,7 +11,7 @@ import {
 import {
   setSearchResults,
   setAutocompleteResults,
-} from '../app/stopResultsSlice';
+} from '../app/stopResultsSlice.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { StopSearchNearby } from './StopSearchNearby';
 

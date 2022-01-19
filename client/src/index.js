@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import store from './app/store';
+import { store } from './app/store.ts';
 import { Provider } from 'react-redux';
 import { CookiesProvider } from 'react-cookie';
 

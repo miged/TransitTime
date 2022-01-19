@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { setSearchResults } from '../app/stopResultsSlice';
+import { setSearchResults } from '../app/stopResultsSlice.ts';
 
 export const StopSearchNearby = (props) => {
   const dispatch = useDispatch();

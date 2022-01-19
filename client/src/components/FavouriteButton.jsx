@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Cookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFavourites } from '../app/stopResultsSlice';
+import { setFavourites } from '../app/stopResultsSlice.ts';
 import { IconButton } from '@mui/material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';

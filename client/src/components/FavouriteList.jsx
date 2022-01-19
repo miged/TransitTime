@@ -2,7 +2,7 @@ import React from 'react';
 import { useCookies } from 'react-cookie';
 import { Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFavourites } from '../app/stopResultsSlice';
+import { setFavourites } from '../app/stopResultsSlice.ts';
 import { StopCard } from './StopCard.tsx';
 
 export const FavouriteList = (props) => {
