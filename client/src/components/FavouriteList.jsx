@@ -12,7 +12,7 @@ export const FavouriteList = (props) => {
   const faves = useSelector((state) => state.stopResults.favourites);
 
   if (!load) {
-    dispatch(setFavourites(cookies?.favourites));
+    cookies.favourites && dispatch(setFavourites(cookies.favourites));
     setLoad(true);
   }
 
