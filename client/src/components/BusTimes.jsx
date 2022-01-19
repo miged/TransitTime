@@ -16,12 +16,9 @@ export default function BusTimes(props) {
     return uniqueIdCount;
   }
 
-  const refreshData = (clear) => {
+  const refreshData = () => {
     console.log(times);
     if (times.stop_id) {
-      if (clear) {
-        setGTFS([]);
-      }
       axios
         .get('http://localhost:8080/api/trips', {
           params: {
@@ -38,10 +35,11 @@ export default function BusTimes(props) {
   };
 
   useEffect(() => {
+    setGTFS([]);
     refreshData(true);
   }, [times]);
 
-  useInterval(() => refreshData(false), 10000);
+  useInterval(refreshData, 10000);
 
   let busTimes = GTFS.map((data) => {
     return (
