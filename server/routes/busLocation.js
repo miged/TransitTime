@@ -4,8 +4,10 @@ const router = express.Router();
 const GtfsRealtimeBindings = require("gtfs-realtime-bindings");
 
 module.exports = () => {
-  router.get("/", (req, res) => {
+  router.get("/:id", (req, res) => {
     let data = {};
+
+    const id = req.params.id;
 
     const url =
       "http://gtfs.edmonton.ca/TMGTFSRealTimeWebService/Vehicle/VehiclePositions.pb";
@@ -19,7 +21,13 @@ module.exports = () => {
         const feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(
           res.data
         );
-        data["position"] = feed.entity[4]["vehicle"]["position"];
+        for (let val of feed.entity) {
+          if (val.vehicle.vehicle.id === `${id}`) {
+            data["bus"] = val.vehicle.vehicle;
+            data["position"] = val.vehicle.position;
+            data["time"] = val.vehicle.timestamp;
+          }
+        }
         console.log(data);
       })
       .then(() => res.json(data))
