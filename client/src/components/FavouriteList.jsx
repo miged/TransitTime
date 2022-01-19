@@ -24,6 +24,7 @@ export const FavouriteList = (props) => {
         stop_id={f.stop_id}
         stop_name={f.stop_name}
         route_id={f.route_id}
+        route_num={f.route_num}
         route_name={f.route_name}
       />
     );

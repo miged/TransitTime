@@ -6,6 +6,7 @@ export const stopResultsSlice = createSlice({
     searchResults: [],
     autocompleteResults: [],
     favourites: [],
+    times: {},
   },
   reducers: {
     setSearchResults: (state, action) => {
@@ -17,11 +18,18 @@ export const stopResultsSlice = createSlice({
     setFavourites: (state, action) => {
       state.favourites = action.payload;
     },
+    setTimes: (state, action) => {
+      state.times = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setSearchResults, setAutocompleteResults, setFavourites } =
-  stopResultsSlice.actions;
+export const {
+  setSearchResults,
+  setAutocompleteResults,
+  setFavourites,
+  setTimes,
+} = stopResultsSlice.actions;
 
 export default stopResultsSlice.reducer;

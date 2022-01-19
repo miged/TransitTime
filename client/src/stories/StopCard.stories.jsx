@@ -18,6 +18,6 @@ export const Primary = Template.bind({});
 Primary.args = {
   stop_id: 135,
   stop_name: 'Stop Name',
-  route_id: 123,
+  route_num: 123,
   route_name: 'Route Name',
 };

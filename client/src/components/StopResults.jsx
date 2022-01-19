@@ -15,7 +15,8 @@ export const StopResults = (props) => {
           id={s.id}
           stop_id={s.stop_id}
           stop_name={s.stop_name}
-          route_id={r.route.route_short_name}
+          route_id={r.route.route_id}
+          route_num={r.route.route_short_name}
           route_name={r.route.route_long_name}
         />
       );

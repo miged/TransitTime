@@ -16,8 +16,9 @@ export const FavouriteButton = (props) => {
   const [clicked, setClick] = React.useState(false);
   const stopInfo = {
     stop_id: props.stop_id,
-    route_id: props.route_id,
     stop_name: props.stop_name,
+    route_id: props.route_id,
+    route_num: props.route_num,
     route_name: props.route_name,
   };
 
@@ -80,5 +81,6 @@ FavouriteButton.propTypes = {
   stop_id: PropTypes.string,
   stop_name: PropTypes.string,
   route_id: PropTypes.string,
+  route_num: PropTypes.string,
   route_name: PropTypes.string,
 };

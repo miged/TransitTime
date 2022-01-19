@@ -3,9 +3,12 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import BusDropdown from './BusDropdown';
 import './BusDropdown.css';
+import { useSelector } from 'react-redux';
+import useInterval from 'react-useinterval';
 
 export default function BusTimes(props) {
   const [GTFS, setGTFS] = useState([]);
+  const times = useSelector((state) => state.stopResults.times);
 
   let uniqueIdCount = 0;
   function uniqueId() {
@@ -14,23 +17,26 @@ export default function BusTimes(props) {
   }
 
   const refreshData = () => {
+    console.log(times);
     axios
-      .get('http://localhost:3001/api/trips', {
+      .get('http://localhost:8080/api/trips', {
         params: {
-          stop_id: props.stop_id,
-          route_id: props.route_id,
+          stop_id: parseInt(times.stop_id),
+          route_id: times.route_id,
         },
       })
       .then((response) => {
         let parsedFeeds = JSON.parse(response.data);
+        console.log(parsedFeeds);
         setGTFS(parsedFeeds);
       });
   };
 
   useEffect(() => {
     refreshData();
-    setInterval(refreshData, 30000);
-  }, []);
+  }, [times]);
+
+  useInterval(refreshData, 3000);
 
   const busTimes = GTFS.map((data) => {
     return (
@@ -39,7 +45,7 @@ export default function BusTimes(props) {
         stop_id={data.stopId}
         trip_id={data.tripId}
         route_id={data.routeId}
-        route_name={props.route_name}
+        route_name={times.route_name}
         time={data.time}
         vehicle_id={data.vehicleID}
       />
