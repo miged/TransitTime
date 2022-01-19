@@ -6,12 +6,14 @@ import { setFavourites } from '../app/stopResultsSlice.ts';
 import { StopCard } from './StopCard.tsx';
 
 export const FavouriteList = (props) => {
+  const [load, setLoad] = React.useState(false);
   const dispatch = useDispatch();
   const [cookies] = useCookies(['favourites']);
   const faves = useSelector((state) => state.stopResults.favourites);
 
-  if (faves.length === 0) {
+  if (!load) {
     dispatch(setFavourites(cookies?.favourites));
+    setLoad(true);
   }
 
   const results = faves.map((f) => {
