@@ -1,13 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Cookies } from 'react-cookie';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setFavourites } from '../app/stopResultsSlice';
 import { IconButton } from '@mui/material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 
 export const FavouriteButton = (props) => {
+  const faves = useSelector((state) => state.stopResults.favourites);
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const faveCookies = 'favourites';
@@ -28,7 +30,7 @@ export const FavouriteButton = (props) => {
     if (isFavourited(stopInfo)) {
       setClick(true);
     }
-  }, []);
+  }, [faves]);
 
   function addFavourite(fave) {
     const faves = cookies.get(faveCookies);
