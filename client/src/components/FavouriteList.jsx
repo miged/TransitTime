@@ -10,8 +10,8 @@ export const FavouriteList = (props) => {
   const [cookies] = useCookies(['favourites']);
   const faves = useSelector((state) => state.stopResults.favourites);
 
-  if (faves.length === 0 && cookies.favourites?.length > 0) {
-    dispatch(setFavourites(cookies.favourites));
+  if (faves.length === 0) {
+    dispatch(setFavourites(cookies?.favourites));
   }
 
   const results = faves.map((f) => {
