@@ -22,7 +22,7 @@ export default function BusDropdown(props) {
       <tr onClick={() => toggleable()}>
         <td>{props.route_id}</td>
         <td>{props.route_name}</td>
-        <td>{props.time} minutes</td>
+        <td>{props.time} min</td>
         <td className={clickClass}>{/* <Map /> */}</td>
       </tr>
     </tbody>
