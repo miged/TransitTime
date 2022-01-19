@@ -1,9 +1,10 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { StopCard } from './StopCard';
+import BusDropdown from "./BusDropdown";
+import "./BusDropdown.css"
 
-export default function BusTimes(props) {
+export default function Pb(props) {
 
   const [GTFS, setGTFS] = useState([])
 
@@ -27,7 +28,7 @@ export default function BusTimes(props) {
 
   const busTimes = GTFS.map ((data) => {
     return (
-      <StopCard
+      <BusDropdown
         stop_id={data.stopId}
         trip_id={data.tripId}
         route_id={data.routeId}
@@ -39,6 +40,13 @@ export default function BusTimes(props) {
   )
 
   return (
-    <>{busTimes}</>
+    <table>
+      <tr>
+        <th>Route</th>
+        <th>Name</th>
+        <th>Time</th>
+      </tr>
+      <>{busTimes}</>
+    </table>
   );
 }
