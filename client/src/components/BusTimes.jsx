@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+import './BusDropdown.css';
 import { useEffect, useState } from 'react';
 import BusDropdown from './BusDropdown';
-import './BusDropdown.css';
+import { CircularProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
 import useInterval from 'react-useinterval';
 
@@ -69,7 +70,10 @@ export default function BusTimes(props) {
           <>{busTimes}</>
         </table>
       ) : (
-        <table></table>
+        <>
+          <table></table>
+          {times.stop_id && <CircularProgress sx={{ my: 1 }} />}
+        </>
       )}
     </>
   );
