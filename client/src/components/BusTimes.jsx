@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import BusDropdown from "./BusDropdown";
 import "./BusDropdown.css"
 
-export default function Pb(props) {
+export default function BusTimes(props) {
 
   const [GTFS, setGTFS] = useState([])
 
   const refreshData = () => {
-    axios.get('http://localhost:8080/api/trips', {
+    axios.get('http://localhost:3001/api/trips', {
     params: {
       stop_id: "5359",
       route_id: "002"
@@ -41,11 +41,13 @@ export default function Pb(props) {
 
   return (
     <table>
-      <tr>
-        <th>Route</th>
-        <th>Name</th>
-        <th>Time</th>
-      </tr>
+      <thead>
+        <tr>
+          <th>Route</th>
+          <th>Name</th>
+          <th>Time</th>
+        </tr>
+      </thead>
       <>{busTimes}</>
     </table>
   );
