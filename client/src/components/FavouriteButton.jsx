@@ -12,6 +12,12 @@ export const FavouriteButton = (props) => {
   const dispatch = useDispatch();
   const faveCookies = 'favourites';
   const [clicked, setClick] = React.useState(false);
+  const stopInfo = {
+    stop_id: props.stop_id,
+    route_id: props.route_id,
+    stop_name: props.stop_name,
+    route_name: props.route_name,
+  };
 
   // initialise cookie
   if (!cookies.get(faveCookies)) {
@@ -19,7 +25,7 @@ export const FavouriteButton = (props) => {
   }
 
   React.useEffect(() => {
-    if (isFavourited({ stop: props.id, route: props.route_id })) {
+    if (isFavourited(stopInfo)) {
       setClick(true);
     }
   }, []);
@@ -45,8 +51,7 @@ export const FavouriteButton = (props) => {
     return faves.find((f) => JSON.stringify(f) === JSON.stringify(fave));
   }
 
-  function favouriteClick(stop, route) {
-    const fave = { stop, route };
+  function favouriteClick(fave) {
     setClick(!clicked);
     if (!isFavourited(fave)) {
       addFavourite(fave);
@@ -61,7 +66,7 @@ export const FavouriteButton = (props) => {
     <IconButton
       aria-label="fav"
       color="primary"
-      onClick={() => favouriteClick(props.id, props.route_id)}
+      onClick={() => favouriteClick(stopInfo)}
     >
       {clicked ? <StarIcon /> : <StarBorderIcon />}
     </IconButton>
@@ -70,5 +75,8 @@ export const FavouriteButton = (props) => {
 
 FavouriteButton.propTypes = {
   id: PropTypes.number,
+  stop_id: PropTypes.string,
+  stop_name: PropTypes.string,
   route_id: PropTypes.string,
+  route_name: PropTypes.string,
 };

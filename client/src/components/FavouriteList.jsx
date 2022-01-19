@@ -14,10 +14,8 @@ export const FavouriteList = (props) => {
   }
 
   const results = faves.map((f) => {
-    return `(${f.stop} - ${f.route})`;
+    return `(${f.stop_id} - ${f.route_id})`;
   });
-
-  console.log('faves', results);
 
   return <>{results}</>;
 };

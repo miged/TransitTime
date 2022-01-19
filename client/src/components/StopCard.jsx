@@ -30,7 +30,12 @@ export const StopCard = (props) => {
           </Typography>
           <Typography>{props.route_name}</Typography>
         </Box>
-        <FavouriteButton id={props.id} route_id={props.route_id} />
+        <FavouriteButton
+          stop_id={props.stop_id}
+          stop_name={props.stop_name}
+          route_id={props.route_id}
+          route_name={props.route_name}
+        />
       </Box>
     </Card>
   );
