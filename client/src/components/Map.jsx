@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import L from "leaflet";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L, { Point } from "leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Tooltip } from "react-leaflet";
 import axios from "axios";
 
-const Map = () => {
+const Map = (props) => {
   let [stopCoordinate, setStopCoordinate] = useState({
     lat: 53.53414,
     lon: -113.50254,
@@ -14,6 +14,10 @@ const Map = () => {
   });
 
   let [count, setCount] = useState(0);
+
+  let id = 2177; //props.id //bus id
+
+  const point = L.point(0, -18);
 
   const busIcon = L.icon({
     iconUrl: "./assets/bus_pos.png",
@@ -29,7 +33,7 @@ const Map = () => {
 
   useEffect(() => {
     axios
-      .get("api/busLocation")
+      .get(`api/busLocation/${id}`)
       .then((res) => {
         let data = res.data.position;
         setBusCoordinate((prev) => ({
@@ -57,7 +61,14 @@ const Map = () => {
           icon={busIcon}
           position={[busCoordinate.lat, busCoordinate.lon]}
         >
-          <Popup>Last updated 30s ago.</Popup>
+          <Tooltip
+            permanent={true}
+            direction={"top"}
+            opacity={0.8}
+            offset={point}
+          >
+            30s ago.
+          </Tooltip>
         </Marker>
 
         <Marker
