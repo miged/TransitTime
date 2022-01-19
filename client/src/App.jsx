@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { StopSearch } from './components/StopSearch';
 import { StopResults } from './components/StopResults';
 import { TransitSelect } from './components/TransitSelect';

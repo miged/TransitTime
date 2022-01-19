@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { StopCard } from './StopCard';
+import { Typography } from '@mui/material';
 
 export const StopResults = (props) => {
   const stops = useSelector((state) => state.stopResults.searchResults);
@@ -21,5 +22,10 @@ export const StopResults = (props) => {
     });
   });
 
-  return <>{results}</>;
+  return (
+    <>
+      {results.length > 0 && <Typography>Results:</Typography>}
+      {results}
+    </>
+  );
 };
