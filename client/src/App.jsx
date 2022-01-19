@@ -4,6 +4,7 @@ import { Box } from '@mui/material';
 import { StopSearch } from './components/StopSearch';
 import { StopResults } from './components/StopResults';
 import { TransitSelect } from './components/TransitSelect';
+import { FavouriteList } from './components/FavouriteList';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           flexDirection: 'column',
         }}
       >
+        <FavouriteList />
         <StopResults />
       </Box>
     </main>

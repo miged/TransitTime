@@ -9,8 +9,14 @@ import StarIcon from '@mui/icons-material/Star';
 
 export const FavouriteButton = (props) => {
   const cookies = new Cookies();
+  const dispatch = useDispatch();
   const faveCookies = 'favourites';
   const [clicked, setClick] = React.useState(false);
+
+  // initialise cookie
+  if (!cookies.get(faveCookies)) {
+    cookies.set(faveCookies, []);
+  }
 
   React.useEffect(() => {
     if (isFavourited({ stop: props.id, route: props.route_id })) {
@@ -22,6 +28,7 @@ export const FavouriteButton = (props) => {
     const faves = cookies.get(faveCookies);
     faves.push(fave);
     cookies.set(faveCookies, faves);
+    dispatch(setFavourites(faves));
   }
 
   function removeFavourite(fave) {
@@ -30,6 +37,7 @@ export const FavouriteButton = (props) => {
       (f) => JSON.stringify(f) !== JSON.stringify(fave)
     );
     cookies.set(faveCookies, filtered);
+    dispatch(setFavourites(filtered));
   }
 
   function isFavourited(fave) {
@@ -38,11 +46,6 @@ export const FavouriteButton = (props) => {
   }
 
   function favouriteClick(stop, route) {
-    // initialise cookie
-    if (!cookies.get(faveCookies)) {
-      cookies.set(faveCookies, []);
-    }
-
     const fave = { stop, route };
     setClick(!clicked);
     if (!isFavourited(fave)) {
