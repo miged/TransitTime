@@ -17,8 +17,8 @@ export default function BusTimes(props) {
   const refreshData = () => {
     axios.get('http://localhost:3001/api/trips', {
     params: {
-      stop_id: "5359",
-      route_id: "002"
+      stop_id: props.stop_id,
+      route_id: props.route_id
     }
   })
     .then(response => {
@@ -39,6 +39,7 @@ export default function BusTimes(props) {
         stop_id={data.stopId}
         trip_id={data.tripId}
         route_id={data.routeId}
+        route_name={props.route_name}
         time={data.time}
         vehicle_id={data.vehicleID}
       />

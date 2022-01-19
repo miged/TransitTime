@@ -19,7 +19,7 @@ export default function BusDropdown(props) {
     <tbody>
       <tr onClick={() => toggleable()}>
         <td>{props.route_id}</td>
-        <td>Bus Route here</td>
+        <td>{props.route_name}</td>
         <td>{props.time}</td>
         <td className={clickClass}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
