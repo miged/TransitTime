@@ -1,9 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Box, Card, Typography } from '@mui/material';
 import { FavouriteButton } from './FavouriteButton';
 
-export const StopCard = (props) => {
+export interface Props {
+  sx?: Object;
+  stop_id: string;
+  stop_name: string;
+  route_id: string;
+  route_name: string;
+}
+
+export const StopCard = (props: Props) => {
   return (
     <Card sx={{ width: 500, p: 2, ...props.sx }} variant="outlined">
       <Box
@@ -39,12 +45,4 @@ export const StopCard = (props) => {
       </Box>
     </Card>
   );
-};
-
-StopCard.propTypes = {
-  stop_id: PropTypes.string,
-  stop_name: PropTypes.string,
-  route_id: PropTypes.string,
-  route_name: PropTypes.string,
-  next_times: PropTypes.array,
 };

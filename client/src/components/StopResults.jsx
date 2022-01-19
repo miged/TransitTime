@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { StopCard } from './StopCard';
+import { StopCard } from './StopCard.tsx';
 import { Typography } from '@mui/material';
 
 export const StopResults = (props) => {

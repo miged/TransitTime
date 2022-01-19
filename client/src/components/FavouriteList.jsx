@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import { Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFavourites } from '../app/stopResultsSlice';
-import { StopCard } from './StopCard';
+import { StopCard } from './StopCard.tsx';
 
 export const FavouriteList = (props) => {
   const dispatch = useDispatch();
