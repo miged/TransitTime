@@ -21,13 +21,14 @@ module.exports = () => {
         const feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(
           res.data
         );
-
         for (let val of feed.entity) {
           if (val.vehicle.vehicle.id === `${id}`) {
             data["bus"] = val.vehicle.vehicle;
             data["position"] = val.vehicle.position;
+            data["time"] = val.vehicle.timestamp;
           }
         }
+        console.log(data);
       })
       .then(() => res.json(data))
       .catch(function (error) {
