@@ -15,7 +15,7 @@ const Map = (props) => {
 
   let [count, setCount] = useState(0);
 
-  let id = 2177; //props.id //bus id
+  let id = 4310; //props.id //bus id
 
   const point = L.point(0, -18);
 
@@ -41,6 +41,7 @@ const Map = (props) => {
           lat: data.latitude,
           lon: data.longitude,
         }));
+        // console.log(new Date(data.time));
       })
       .catch((err) => console.log(err));
   }, [count]);
@@ -70,7 +71,6 @@ const Map = (props) => {
             30s ago.
           </Tooltip>
         </Marker>
-
         <Marker
           icon={stopIcon}
           position={[stopCoordinate.lat, stopCoordinate.lon]}
