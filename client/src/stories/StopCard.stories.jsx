@@ -1,5 +1,5 @@
 import React from 'react';
-import { StopCard } from '../components/StopCard';
+import { StopCard } from '../components/StopCard.tsx';
 import store from '../app/store';
 import { Provider } from 'react-redux';
 

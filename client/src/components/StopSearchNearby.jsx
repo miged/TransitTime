@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { setSearchResults } from '../app/stopResultsSlice';
+import { setSearchResults } from '../app/stopResultsSlice.ts';
 
 export const StopSearchNearby = (props) => {
   const dispatch = useDispatch();
@@ -28,13 +28,7 @@ export const StopSearchNearby = (props) => {
   }
 
   return (
-    <Button
-      variant="contained"
-      disableElevation
-      onClick={() => {
-        getLocation();
-      }}
-    >
+    <Button variant="contained" disableElevation onClick={getLocation}>
       Search Nearby
     </Button>
   );

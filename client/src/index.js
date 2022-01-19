@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import store from './app/store';
+import { store } from './app/store.ts';
 import { Provider } from 'react-redux';
+import { CookiesProvider } from 'react-cookie';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -14,7 +15,9 @@ import '@fontsource/roboto/700.css';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <CookiesProvider>
+        <App />
+      </CookiesProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

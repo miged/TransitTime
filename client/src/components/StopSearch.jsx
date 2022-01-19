@@ -11,7 +11,7 @@ import {
 import {
   setSearchResults,
   setAutocompleteResults,
-} from '../app/stopResultsSlice';
+} from '../app/stopResultsSlice.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { StopSearchNearby } from './StopSearchNearby';
 
@@ -54,6 +54,14 @@ export const StopSearch = (props) => {
     }, 150);
   }
 
+  function searchClick() {
+    if (stop.length !== 0) {
+      setLoading(true);
+      dispatch(setSearchResults([]));
+      searchStop(stop, false);
+    }
+  }
+
   return (
     <Box>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -81,13 +89,7 @@ export const StopSearch = (props) => {
           sx={{ mx: 1, py: 1 }}
           variant="contained"
           disableElevation
-          onClick={() => {
-            if (stop.length !== 0) {
-              setLoading(true);
-              dispatch(setSearchResults([]));
-              searchStop(stop, false);
-            }
-          }}
+          onClick={searchClick}
         >
           Search
         </Button>

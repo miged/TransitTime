@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { StopCard } from './StopCard';
+import { StopCard } from './StopCard.tsx';
+import { Typography } from '@mui/material';
 
 export const StopResults = (props) => {
   const stops = useSelector((state) => state.stopResults.searchResults);
@@ -11,6 +12,7 @@ export const StopResults = (props) => {
         <StopCard
           sx={{ my: 1 }}
           key={s.id + r.route.route_short_name}
+          id={s.id}
           stop_id={s.stop_id}
           stop_name={s.stop_name}
           route_id={r.route.route_short_name}
@@ -20,5 +22,10 @@ export const StopResults = (props) => {
     });
   });
 
-  return <>{results}</>;
+  return (
+    <>
+      {results.length > 0 && <Typography>Results:</Typography>}
+      {results}
+    </>
+  );
 };
