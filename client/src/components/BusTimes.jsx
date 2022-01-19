@@ -18,18 +18,20 @@ export default function BusTimes(props) {
 
   const refreshData = () => {
     console.log(times);
-    axios
-      .get('http://localhost:8080/api/trips', {
-        params: {
-          stop_id: parseInt(times.stop_id),
-          route_id: times.route_id,
-        },
-      })
-      .then((response) => {
-        let parsedFeeds = JSON.parse(response.data);
-        console.log(parsedFeeds);
-        setGTFS(parsedFeeds);
-      });
+    if (times.stop_id) {
+      axios
+        .get('http://localhost:8080/api/trips', {
+          params: {
+            stop_id: parseInt(times.stop_id),
+            route_id: times.route_id,
+          },
+        })
+        .then((response) => {
+          let parsedFeeds = JSON.parse(response.data);
+          console.log(parsedFeeds);
+          setGTFS(parsedFeeds);
+        });
+    }
   };
 
   useEffect(() => {

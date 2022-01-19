@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import './BusDropdown.css';
+import Map from './Map';
 
 export default function BusDropdown(props) {
   const [clicked, setClicked] = useState(false);
@@ -21,8 +22,8 @@ export default function BusDropdown(props) {
       <tr onClick={() => toggleable()}>
         <td>{props.route_id}</td>
         <td>{props.route_name}</td>
-        <td>{props.time}</td>
-        <td className={clickClass}>...</td>
+        <td>{props.time} minutes</td>
+        <td className={clickClass}>{/* <Map /> */}</td>
       </tr>
     </tbody>
   );

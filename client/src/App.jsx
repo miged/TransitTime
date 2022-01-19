@@ -38,6 +38,7 @@ function App() {
         </Box>
         <Box
           sx={{
+            pl: 2,
             display: 'flex',
             justifyContent: 'center',
             flexDirection: 'row',
