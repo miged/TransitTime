@@ -40,7 +40,9 @@ export const StopResults = () => {
 
   return (
     <Paper elevation={0}>
-      {results.length > 0 && <Typography>Results:</Typography>}
+      {results.length > 0 && (
+        <Typography> {results.length} Results:</Typography>
+      )}
       {results}
     </Paper>
   );
