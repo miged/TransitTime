@@ -1,6 +1,6 @@
 import { useAppSelector } from '../app/hooks';
 import { StopCard } from './StopCard';
-import { Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 
 interface Stop {
   id: number;
@@ -39,9 +39,9 @@ export const StopResults = () => {
   });
 
   return (
-    <>
+    <Paper elevation={0}>
       {results.length > 0 && <Typography>Results:</Typography>}
       {results}
-    </>
+    </Paper>
   );
 };
