@@ -1,50 +1,55 @@
 import './App.css';
 import React from 'react';
-import { Box } from '@mui/material';
-import { StopSearch } from './components/StopSearch';
-import { StopResults } from './components/StopResults';
-import { TransitSelect } from './components/TransitSelect';
-import { FavouriteList } from './components/FavouriteList';
+import { StopSection } from './components/StopSection';
 import BusTimes from './components/BusTimes';
+import { Box, Typography, useMediaQuery } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function App() {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode]
+  );
+  const canvasColor = theme.palette.background.default;
+  document.body.style.backgroundColor = canvasColor;
+
   return (
-    <main className="App">
-      <h1>Transit App</h1>
-      <Box
-        sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'row' }}
-      >
+    <ThemeProvider theme={theme}>
+      <main className="App">
+        <Typography
+          sx={{
+            py: 2,
+            fontSize: 32,
+            fontWeight: 'bold',
+            color: theme.palette.text.primary,
+          }}
+        >
+          TransitTime
+        </Typography>
         <Box
           sx={{
             display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column',
+            justifyContent: 'center',
+            flexDirection: 'row',
           }}
         >
-          <TransitSelect sx={{ pb: 1.5 }} />
-          <Box>
-            <StopSearch />
-          </Box>
+          <StopSection />
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
+              pl: 2,
             }}
           >
-            <FavouriteList />
-            <StopResults />
+            <BusTimes />
           </Box>
         </Box>
-        <Box
-          sx={{
-            pl: 2,
-          }}
-        >
-          <BusTimes />
-        </Box>
-      </Box>
-    </main>
+      </main>
+    </ThemeProvider>
   );
 }
 

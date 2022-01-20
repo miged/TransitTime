@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import { CookiesProvider } from 'react-cookie';
+import { CssBaseline } from '@mui/material';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -14,6 +15,7 @@ import '@fontsource/roboto/700.css';
 
 ReactDOM.render(
   <React.StrictMode>
+    <CssBaseline />
     <Provider store={store}>
       <CookiesProvider>
         <App />
