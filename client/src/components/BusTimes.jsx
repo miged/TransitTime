@@ -18,7 +18,7 @@ export default function BusTimes(props) {
 
   const refreshData = () => {
     axios
-      .get('http://localhost:8080/api/trips', {
+      .get('api/trips', {
         params: {
           stop_id: times.stop_id,
           route_id: times.route_id,
