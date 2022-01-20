@@ -1,10 +1,12 @@
-import React from "react";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import BusDropdown from "./BusDropdown";
-import "./BusDropdown.css";
-import { useSelector } from "react-redux";
-import useInterval from "react-useinterval";
+import React from 'react';
+import axios from 'axios';
+import './BusDropdown.css';
+import { useEffect, useState } from 'react';
+import BusDropdown from './BusDropdown';
+import { CircularProgress } from '@mui/material';
+import { useSelector } from 'react-redux';
+import useInterval from 'react-useinterval';
+
 
 export default function BusTimes(props) {
   const [GTFS, setGTFS] = useState([]);
@@ -17,28 +19,27 @@ export default function BusTimes(props) {
   }
 
   const refreshData = () => {
-    console.log(times);
     axios
       .get("http://localhost:8080/api/trips", {
         params: {
-          stop_id: parseInt(times.stop_id),
+          stop_id: times.stop_id,
           route_id: times.route_id,
         },
       })
       .then((response) => {
         let parsedFeeds = JSON.parse(response.data);
-        console.log(parsedFeeds);
         setGTFS(parsedFeeds);
       });
-  };
+    };
 
   useEffect(() => {
-    refreshData();
+    setGTFS([]);
+    refreshData(true);
   }, [times]);
 
-  useInterval(refreshData, 45000);
+  useInterval(refreshData, 30000);
 
-  const busTimes = GTFS.map((data) => {
+  let busTimes = GTFS.map((data) => {
     return (
       <BusDropdown
         key={uniqueId()}
@@ -58,10 +59,31 @@ export default function BusTimes(props) {
         <tr>
           <th>Route</th>
           <th>Name</th>
+          <th>Destination</th>
           <th>Time</th>
         </tr>
       </thead>
       <>{busTimes}</>
     </table>
+    <>
+      {busTimes.length > 0 ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Route</th>
+              <th>Name</th>
+              <th>Destination</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <>{busTimes}</>
+        </table>
+      ) : (
+        <>
+          <table></table>
+          {times.stop_id && <CircularProgress sx={{ my: 1 }} />}
+        </>
+      )}
+    </>
   );
 }

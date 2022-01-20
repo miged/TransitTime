@@ -1,13 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+interface ResultsState {
+  searchResults: any[];
+  autocompleteResults: any[];
+  favourites: any[];
+  times: Object;
+}
+
+const initialState: ResultsState = {
+  searchResults: [],
+  autocompleteResults: [],
+  favourites: [],
+  times: {},
+};
+
 export const stopResultsSlice = createSlice({
   name: 'stopResults',
-  initialState: {
-    searchResults: [],
-    autocompleteResults: [],
-    favourites: [],
-    times: {},
-  },
+  initialState,
   reducers: {
     setSearchResults: (state, action) => {
       state.searchResults = action.payload;

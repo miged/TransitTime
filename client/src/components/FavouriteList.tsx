@@ -1,15 +1,15 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
 import { Typography } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { setFavourites } from '../app/stopResultsSlice.ts';
-import { StopCard } from './StopCard.tsx';
+import { StopCard } from './StopCard';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { setFavourites } from '../app/stopResultsSlice';
 
-export const FavouriteList = (props) => {
+export const FavouriteList = () => {
   const [load, setLoad] = React.useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [cookies] = useCookies(['favourites']);
-  const faves = useSelector((state) => state.stopResults.favourites);
+  const faves = useAppSelector((state) => state.stopResults.favourites);
 
   if (!load) {
     cookies.favourites && dispatch(setFavourites(cookies.favourites));
