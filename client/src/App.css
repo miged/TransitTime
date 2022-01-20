@@ -23,5 +23,9 @@
 
 #map {
   height: 400px;
-  width: 400px;
+  width: 100%;
+}
+
+#map-row {
+  grid-column: 1 / span 3;
 }
