@@ -7,6 +7,7 @@ import { CircularProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
 import useInterval from 'react-useinterval';
 
+
 export default function BusTimes(props) {
   const [GTFS, setGTFS] = useState([]);
   const times = useSelector((state) => state.stopResults.times);
@@ -19,7 +20,7 @@ export default function BusTimes(props) {
 
   const refreshData = () => {
     axios
-      .get('api/trips', {
+      .get("http://localhost:8080/api/trips", {
         params: {
           stop_id: times.stop_id,
           route_id: times.route_id,
