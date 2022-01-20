@@ -1,10 +1,14 @@
 import React from 'react';
 import { Autocomplete, TextField } from '@mui/material';
-import { setTransitId } from '../app/transitSlice.ts';
-import { useDispatch } from 'react-redux';
+import { setTransitId } from '../app/transitSlice';
+import { useAppDispatch } from '../app/hooks';
 
-export const TransitSelect = (props) => {
-  const dispatch = useDispatch();
+export interface Props {
+  sx?: Object;
+}
+
+export const TransitSelect = (props: Props) => {
+  const dispatch = useAppDispatch();
   const [transit, setTransit] = React.useState(
     'Edmonton Transit Service (ETS)'
   );

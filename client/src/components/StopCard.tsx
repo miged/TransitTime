@@ -1,10 +1,11 @@
 import { Box, Card, Typography, Button } from '@mui/material';
+import { useAppDispatch } from '../app/hooks';
 import { FavouriteButton } from './FavouriteButton';
-import { useDispatch } from 'react-redux';
-import { setTimes } from '../app/stopResultsSlice.ts';
+import { setTimes } from '../app/stopResultsSlice';
 
 export interface Props {
   sx?: Object;
+  id?: number;
   stop_id: string;
   stop_name: string;
   route_id: string;
@@ -13,7 +14,7 @@ export interface Props {
 }
 
 export const StopCard = (props: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function showTimesClick() {
     console.log('clicked', props);

@@ -1,11 +1,24 @@
-import React from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { setSearchResults } from '../app/stopResultsSlice.ts';
+import { useAppDispatch } from '../app/hooks';
+import { setSearchResults } from '../app/stopResultsSlice';
 
-export const StopSearchNearby = (props) => {
-  const dispatch = useDispatch();
+export interface Props {
+  sx?: Object;
+  setLoading: Function;
+}
+
+interface Coordinates {
+  latitude: number;
+  longitude: number;
+}
+
+interface Position {
+  coords: Coordinates;
+}
+
+export const StopSearchNearby = (props: Props) => {
+  const dispatch = useAppDispatch();
 
   function getLocation() {
     if (navigator.geolocation) {
@@ -15,7 +28,7 @@ export const StopSearchNearby = (props) => {
     }
   }
 
-  function nearbySearch(pos) {
+  function nearbySearch(pos: Position) {
     const { latitude, longitude } = pos.coords;
     const key = process.env.REACT_APP_TRANSITLAND_KEY;
     const url = `https://transit.land/api/v2/rest/stops?api_key=${key}&lat=${latitude}&lon=${longitude}&radius=750`;

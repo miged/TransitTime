@@ -1,20 +1,37 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Cookies } from 'react-cookie';
-import { useDispatch, useSelector } from 'react-redux';
-import { setFavourites } from '../app/stopResultsSlice.ts';
+import { setFavourites } from '../app/stopResultsSlice';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+
 import { IconButton } from '@mui/material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 
-export const FavouriteButton = (props) => {
-  const faves = useSelector((state) => state.stopResults.favourites);
+export interface Props {
+  id?: number;
+  stop_id: string;
+  stop_name: string;
+  route_id: string;
+  route_num: string;
+  route_name: string;
+}
+
+interface Favourite {
+  stop_id: string;
+  stop_name: string;
+  route_id: string;
+  route_num: string;
+  route_name: string;
+}
+
+export const FavouriteButton = (props: Props) => {
+  const faves = useAppSelector((state) => state.stopResults.favourites);
   const cookies = new Cookies();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const faveCookies = 'favourites';
   const [clicked, setClick] = React.useState(false);
-  const stopInfo = {
+  const stopInfo: Favourite = {
     stop_id: props.stop_id,
     stop_name: props.stop_name,
     route_id: props.route_id,
@@ -33,28 +50,30 @@ export const FavouriteButton = (props) => {
     }
   }, [faves]);
 
-  function addFavourite(fave) {
+  function addFavourite(fave: Favourite) {
     const faves = cookies.get(faveCookies);
     faves.push(fave);
     cookies.set(faveCookies, faves);
     dispatch(setFavourites(faves));
   }
 
-  function removeFavourite(fave) {
+  function removeFavourite(fave: Favourite) {
     const faves = cookies.get(faveCookies);
     const filtered = faves.filter(
-      (f) => JSON.stringify(f) !== JSON.stringify(fave)
+      (f: Favourite) => JSON.stringify(f) !== JSON.stringify(fave)
     );
     cookies.set(faveCookies, filtered);
     dispatch(setFavourites(filtered));
   }
 
-  function isFavourited(fave) {
+  function isFavourited(fave: Favourite) {
     const faves = cookies.get(faveCookies);
-    return faves.find((f) => JSON.stringify(f) === JSON.stringify(fave));
+    return faves.find(
+      (f: Favourite) => JSON.stringify(f) === JSON.stringify(fave)
+    );
   }
 
-  function favouriteClick(fave) {
+  function favouriteClick(fave: Favourite) {
     setClick(!clicked);
     if (!isFavourited(fave)) {
       addFavourite(fave);
@@ -74,13 +93,4 @@ export const FavouriteButton = (props) => {
       {clicked ? <StarIcon /> : <StarBorderIcon />}
     </IconButton>
   );
-};
-
-FavouriteButton.propTypes = {
-  id: PropTypes.number,
-  stop_id: PropTypes.string,
-  stop_name: PropTypes.string,
-  route_id: PropTypes.string,
-  route_num: PropTypes.string,
-  route_name: PropTypes.string,
 };

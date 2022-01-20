@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import {
   Box,
@@ -11,22 +10,32 @@ import {
 import {
   setSearchResults,
   setAutocompleteResults,
-} from '../app/stopResultsSlice.ts';
-import { useDispatch, useSelector } from 'react-redux';
+} from '../app/stopResultsSlice';
+import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { StopSearchNearby } from './StopSearchNearby';
 
-export const StopSearch = (props) => {
-  const dispatch = useDispatch();
-  const autocomplete = useSelector(
+export interface Props {
+  sx?: Object;
+  onClick?: Function;
+}
+
+interface Stop {
+  stop_id: string;
+  stop_name: string;
+}
+
+export const StopSearch = (props: Props) => {
+  const dispatch = useAppDispatch();
+  const autocomplete = useAppSelector(
     (state) => state.stopResults.autocompleteResults
   );
-  const transit = useSelector((state) => state.transit.id);
-  const timeout = React.useRef();
+  const transit = useAppSelector((state) => state.transit.id);
+  const timeout = React.useRef<any>();
 
   const [stop, setStop] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
-  function searchStop(name, autocomp) {
+  function searchStop(name: String, autocomp: Boolean) {
     clearTimeout(timeout.current);
     const key = process.env.REACT_APP_TRANSITLAND_KEY;
     const url = `https://transit.land/api/v2/rest/stops?api_key=${key}&served_by_onestop_ids=${transit}&search=${name}`;
@@ -34,7 +43,7 @@ export const StopSearch = (props) => {
     timeout.current = setTimeout(() => {
       if (name.length > 0) {
         axios.get(url).then((res) => {
-          const stops = res.data.stops.filter((s) => {
+          const stops = res.data.stops.filter((s: Stop) => {
             const stop_name = name.split('-')[0].toLowerCase().trim();
             return (
               s.stop_id.toLowerCase().includes(stop_name) ||
@@ -100,12 +109,4 @@ export const StopSearch = (props) => {
       {loading && <CircularProgress sx={{ my: 1 }} />}
     </Box>
   );
-};
-
-StopSearch.propTypes = {
-  onClick: PropTypes.func,
-};
-
-Button.defaultProps = {
-  onClick: undefined,
 };
