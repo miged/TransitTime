@@ -8,8 +8,7 @@ import { IconButton } from '@mui/material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 
-export interface Props {
-  sx?: Object;
+export interface Favourite {
   stop_id: string;
   stop_name: string;
   route_id: string;
@@ -17,27 +16,14 @@ export interface Props {
   route_name: string;
 }
 
-interface Favourite {
-  stop_id: string;
-  stop_name: string;
-  route_id: string;
-  route_num: string;
-  route_name: string;
-}
-
-export const FavouriteButton = (props: Props) => {
-  const faves = useAppSelector((state) => state.stopResults.favourites);
-  const cookies = new Cookies();
-  const dispatch = useAppDispatch();
-  const faveCookies = 'favourites';
+export const FavouriteButton = (props: Favourite) => {
   const [clicked, setClick] = React.useState(false);
-  const stopInfo: Favourite = {
-    stop_id: props.stop_id,
-    stop_name: props.stop_name,
-    route_id: props.route_id,
-    route_num: props.route_num,
-    route_name: props.route_name,
-  };
+  const faves = useAppSelector((state) => state.stopResults.favourites);
+  const dispatch = useAppDispatch();
+
+  const cookies = new Cookies();
+  const faveCookies = 'favourites';
+  const stopInfo: Favourite = { ...props };
 
   // initialise cookie
   if (!cookies.get(faveCookies)) {

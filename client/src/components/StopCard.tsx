@@ -16,7 +16,6 @@ export const StopCard = (props: Props) => {
   const dispatch = useAppDispatch();
 
   function showTimesClick() {
-    console.log('clicked', props);
     dispatch(
       setTimes({
         stop_id: props.stop_id,
