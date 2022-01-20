@@ -1,10 +1,10 @@
-import React from 'react';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import BusDropdown from './BusDropdown';
-import './BusDropdown.css';
-import { useSelector } from 'react-redux';
-import useInterval from 'react-useinterval';
+import React from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import BusDropdown from "./BusDropdown";
+import "./BusDropdown.css";
+import { useSelector } from "react-redux";
+import useInterval from "react-useinterval";
 
 export default function BusTimes(props) {
   const [GTFS, setGTFS] = useState([]);
@@ -19,7 +19,7 @@ export default function BusTimes(props) {
   const refreshData = () => {
     console.log(times);
     axios
-      .get('http://localhost:8080/api/trips', {
+      .get("http://localhost:8080/api/trips", {
         params: {
           stop_id: parseInt(times.stop_id),
           route_id: times.route_id,
@@ -36,7 +36,7 @@ export default function BusTimes(props) {
     refreshData();
   }, [times]);
 
-  useInterval(refreshData, 3000);
+  useInterval(refreshData, 45000);
 
   const busTimes = GTFS.map((data) => {
     return (
