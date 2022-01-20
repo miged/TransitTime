@@ -17,28 +17,24 @@ export default function BusTimes(props) {
   }
 
   const refreshData = () => {
-    console.log(times);
-    if (times.stop_id) {
-      axios
-        .get('http://localhost:8080/api/trips', {
-          params: {
-            stop_id: parseInt(times.stop_id),
-            route_id: times.route_id,
-          },
-        })
-        .then((response) => {
-          let parsedFeeds = JSON.parse(response.data);
-          console.log(parsedFeeds);
-          setGTFS(parsedFeeds);
-        });
-    }
-  };
+    axios
+      .get('http://localhost:8080/api/trips', {
+        params: {
+          stop_id: times.stop_id,
+          route_id: times.route_id,
+        },
+      })
+      .then((response) => {
+        let parsedFeeds = JSON.parse(response.data);
+        setGTFS(parsedFeeds);
+      });
+    };
 
   useEffect(() => {
     refreshData();
   }, [times]);
 
-  useInterval(refreshData, 3000);
+  useInterval(refreshData, 30000);
 
   const busTimes = GTFS.map((data) => {
     return (
