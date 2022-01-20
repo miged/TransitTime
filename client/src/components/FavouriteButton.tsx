@@ -9,7 +9,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 
 export interface Props {
-  id?: number;
+  sx?: Object;
   stop_id: string;
   stop_name: string;
   route_id: string;

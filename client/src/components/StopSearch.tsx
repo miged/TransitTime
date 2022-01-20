@@ -35,7 +35,7 @@ export const StopSearch = (props: Props) => {
   const [stop, setStop] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
-  function searchStop(name: String, autocomp: Boolean) {
+  function searchStop(name: string, autocomp: boolean) {
     clearTimeout(timeout.current);
     const key = process.env.REACT_APP_TRANSITLAND_KEY;
     const url = `https://transit.land/api/v2/rest/stops?api_key=${key}&served_by_onestop_ids=${transit}&search=${name}`;

@@ -5,7 +5,6 @@ import { setTimes } from '../app/stopResultsSlice';
 
 export interface Props {
   sx?: Object;
-  id?: number;
   stop_id: string;
   stop_name: string;
   route_id: string;
