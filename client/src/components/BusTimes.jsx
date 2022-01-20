@@ -18,29 +18,25 @@ export default function BusTimes(props) {
   }
 
   const refreshData = () => {
-    console.log(times);
-    if (times.stop_id) {
-      axios
-        .get('http://localhost:8080/api/trips', {
-          params: {
-            stop_id: parseInt(times.stop_id),
-            route_id: times.route_id,
-          },
-        })
-        .then((response) => {
-          let parsedFeeds = JSON.parse(response.data);
-          console.log(parsedFeeds);
-          setGTFS(parsedFeeds);
-        });
-    }
-  };
+    axios
+      .get('api/trips', {
+        params: {
+          stop_id: times.stop_id,
+          route_id: times.route_id,
+        },
+      })
+      .then((response) => {
+        let parsedFeeds = JSON.parse(response.data);
+        setGTFS(parsedFeeds);
+      });
+    };
 
   useEffect(() => {
     setGTFS([]);
     refreshData(true);
   }, [times]);
 
-  useInterval(refreshData, 10000);
+  useInterval(refreshData, 30000);
 
   let busTimes = GTFS.map((data) => {
     return (
@@ -57,6 +53,17 @@ export default function BusTimes(props) {
   });
 
   return (
+    <table>
+      <thead>
+        <tr>
+          <th>Route</th>
+          <th>Name</th>
+          <th>Destination</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <>{busTimes}</>
+    </table>
     <>
       {busTimes.length > 0 ? (
         <table>
@@ -64,6 +71,7 @@ export default function BusTimes(props) {
             <tr>
               <th>Route</th>
               <th>Name</th>
+              <th>Destination</th>
               <th>Time</th>
             </tr>
           </thead>
