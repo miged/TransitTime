@@ -56,6 +56,7 @@ export default function BusTimes(props) {
         <tr>
           <th>Route</th>
           <th>Name</th>
+          <th>Destination</th>
           <th>Time</th>
         </tr>
       </thead>
