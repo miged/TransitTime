@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+import './BusDropdown.css';
 import { useEffect, useState } from 'react';
 import BusDropdown from './BusDropdown';
-import './BusDropdown.css';
+import { CircularProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
 import useInterval from 'react-useinterval';
 
@@ -31,12 +32,13 @@ export default function BusTimes(props) {
     };
 
   useEffect(() => {
-    refreshData();
+    setGTFS([]);
+    refreshData(true);
   }, [times]);
 
   useInterval(refreshData, 30000);
 
-  const busTimes = GTFS.map((data) => {
+  let busTimes = GTFS.map((data) => {
     return (
       <BusDropdown
         key={uniqueId()}
@@ -62,5 +64,25 @@ export default function BusTimes(props) {
       </thead>
       <>{busTimes}</>
     </table>
+    <>
+      {busTimes.length > 0 ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Route</th>
+              <th>Name</th>
+              <th>Destination</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <>{busTimes}</>
+        </table>
+      ) : (
+        <>
+          <table></table>
+          {times.stop_id && <CircularProgress sx={{ my: 1 }} />}
+        </>
+      )}
+    </>
   );
 }

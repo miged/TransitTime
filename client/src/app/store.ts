@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import stopResultsReducer from './stopResultsSlice.ts';
-import transitReducer from './transitSlice.ts';
+import stopResultsReducer from './stopResultsSlice';
+import transitReducer from './transitSlice';
 
 export const store = configureStore({
   reducer: {

@@ -39,9 +39,6 @@ function App() {
         <Box
           sx={{
             pl: 2,
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'row',
           }}
         >
           <BusTimes />
