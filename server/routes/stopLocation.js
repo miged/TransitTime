@@ -13,7 +13,6 @@ module.exports = () => {
         `https://transit.land/api/v2/rest/stops?api_key=${key}&served_by_onestop_ids=${onestopId}&stop_id=${stopId}`
       )
       .then((feed) => {
-        //console.log(feed.data.stops[0].geometry.coordinates);
         return feed.data.stops[0].geometry.coordinates;
       })
       .then((lnglat) => {
