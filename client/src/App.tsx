@@ -3,7 +3,7 @@ import React from 'react';
 import { StopSection } from './components/StopSection';
 import { Header } from './components/Header';
 import BusTimes from './components/BusTimes';
-import { Box } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getDesignTokens } from './theme';
 
@@ -32,9 +32,7 @@ function App() {
           }}
         >
           <StopSection />
-          <Box>
-            <BusTimes />
-          </Box>
+          <BusTimes />
         </Box>
       </main>
     </ThemeProvider>

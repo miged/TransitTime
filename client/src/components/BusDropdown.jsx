@@ -1,8 +1,15 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-//import './BusDropdown.css';
 import { Map } from './Map';
-import { Collapse, TableBody, TableCell, TableRow, Typography } from '@mui/material';
+import {
+  Collapse,
+  TableCell,
+  TableRow,
+  Typography,
+  IconButton,
+} from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 export default function BusDropdown(props) {
   const [clicked, setClicked] = useState(false);
@@ -29,21 +36,29 @@ export default function BusDropdown(props) {
   }, [props.trip_id]);
 
   return (
-    <TableBody>
+    <>
       <TableRow>
+        <TableCell>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setClicked(!clicked)}
+          >
+            {clicked ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
         <TableCell>{props.route_id}</TableCell>
         <TableCell>{props.route_name}</TableCell>
         <TableCell>{trip}</TableCell>
         <TableCell>{props.time} min</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell colSpan={4}>
-          <Typography onClick={() => setClicked(!clicked)}> Expand Map </Typography>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
           <Collapse in={clicked} timeout="auto" unmountOnExit>
             <Map vehicle_id={props.vehicle_id} stop_id={props.stop_id} />
           </Collapse>
         </TableCell>
       </TableRow>
-    </TableBody>
+    </>
   );
 }

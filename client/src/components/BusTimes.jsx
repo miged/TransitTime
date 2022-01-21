@@ -1,9 +1,16 @@
 import axios from 'axios';
-import './BusDropdown.css';
 import { useEffect, useState } from 'react';
 import BusDropdown from './BusDropdown';
 import NoBusTimes from './NoBusTimes';
-import { Table, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import {
+  Table,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableBody,
+  Paper,
+} from '@mui/material';
 import { useSelector } from 'react-redux';
 import useInterval from 'react-useinterval';
 
@@ -53,24 +60,27 @@ export default function BusTimes(props) {
   });
 
   return (
-    <>
+    <Paper sx={{ width: 550 }} elevation={1}>
       {busTimes.length > 0 ? (
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell></TableCell>
                 <TableCell>Route</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Destination</TableCell>
                 <TableCell>Time</TableCell>
               </TableRow>
             </TableHead>
-            <>{busTimes}</>
+            <TableBody>
+              <>{busTimes}</>
+            </TableBody>
           </Table>
         </TableContainer>
       ) : (
         <NoBusTimes stop_id={times.stop_id} />
       )}
-    </>
+    </Paper>
   );
 }
