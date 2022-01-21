@@ -1,8 +1,8 @@
-import React from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import './BusDropdown.css';
+//import './BusDropdown.css';
 import { Map } from './Map';
+import { Collapse, TableBody, TableCell, TableRow, Typography } from '@mui/material';
 
 export default function BusDropdown(props) {
   const [clicked, setClicked] = useState(false);
@@ -27,31 +27,22 @@ export default function BusDropdown(props) {
       });
   }, [props.trip_id]);
 
-  const clickClass = clicked
-    ? 'expanded-row-content'
-    : 'expanded-row-content hide-row';
-
-  const toggleable = () => {
-    if (!clicked) {
-      setClicked(true);
-    } else {
-      setClicked(false);
-    }
-  };
-
   return (
-    <tbody>
-      <tr onClick={() => toggleable()}>
-        <td>{props.route_id}</td>
-        <td>{props.route_name}</td>
-        <td>{trip}</td>
-        <td>{props.time} min</td>
-      </tr>
-      <tr>
-        <td id="map-row">
-          <Map vehicle_id={props.vehicle_id} stop_id={props.stop_id} />
-        </td>
-      </tr>
-    </tbody>
+    <TableBody>
+      <TableRow>
+        <TableCell>{props.route_id}</TableCell>
+        <TableCell>{props.route_name}</TableCell>
+        <TableCell>{trip}</TableCell>
+        <TableCell>{props.time} min</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell colSpan={4}>
+          <Typography onClick={() => setClicked(!clicked)}> Expand Map </Typography>
+          <Collapse in={clicked} timeout="auto" unmountOnExit>
+            <Map vehicle_id={props.vehicle_id} stop_id={props.stop_id} />
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </TableBody>
   );
 }
