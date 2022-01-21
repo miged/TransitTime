@@ -28,7 +28,6 @@ module.exports = () => {
             data["time"] = val.vehicle.timestamp;
           }
         }
-        console.log(data);
       })
       .then(() => res.json(data))
       .catch(function (error) {
