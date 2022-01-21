@@ -6,9 +6,9 @@ export default function NoBusTimes(props) {
   const [noBus, setNoBus] = useState(false);
 
   useEffect(() => {
-      setTimeout(() => {
-          setNoBus(true);
-      }, 10000);
+    setTimeout(() => {
+      setNoBus(true);
+    }, 5000);
   }, []);
 
   return !noBus ? (

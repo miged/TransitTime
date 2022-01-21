@@ -69,7 +69,7 @@ export default function BusTimes(props) {
           </Table>
         </TableContainer>
       ) : (
-        <NoBusTimes stop_id={times.stop_id}/>
+        <NoBusTimes stop_id={times.stop_id} />
       )}
     </>
   );
