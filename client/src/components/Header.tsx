@@ -5,7 +5,6 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 export const Header = (props: any) => {
   const theme = useTheme();
-  const { toggleColorMode } = props.colorMode;
 
   return (
     <Paper
@@ -25,7 +24,7 @@ export const Header = (props: any) => {
       >
         TransitTime
       </Typography>
-      <IconButton sx={{ ml: 1 }} onClick={toggleColorMode} color="inherit">
+      <IconButton sx={{ ml: 1 }} onClick={props.colorMode} color="inherit">
         {theme.palette.mode === 'dark' ? (
           <Brightness7Icon />
         ) : (
