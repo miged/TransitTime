@@ -111,7 +111,7 @@ export const Map = (props) => {
           setMap(map);
         }}
         center={[stopCoordinate.lat, stopCoordinate.lon]}
-        zoom={15}
+        zoom={12}
         scrollWheelZoom={false}
       >
         <TileLayer
