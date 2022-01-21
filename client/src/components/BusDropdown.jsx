@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 //import './BusDropdown.css';
 import { Map } from './Map';
-import { Collapse, TableBody, TableCell, TableRow } from '@mui/material';
+import { Collapse, TableBody, TableCell, TableRow, Typography } from '@mui/material';
 
 export default function BusDropdown(props) {
   const [clicked, setClicked] = useState(false);
@@ -29,7 +29,7 @@ export default function BusDropdown(props) {
 
   return (
     <TableBody>
-      <TableRow onClick={() => setClicked(!clicked)}>
+      <TableRow>
         <TableCell>{props.route_id}</TableCell>
         <TableCell>{props.route_name}</TableCell>
         <TableCell>{trip}</TableCell>
@@ -37,6 +37,7 @@ export default function BusDropdown(props) {
       </TableRow>
       <TableRow>
         <TableCell colSpan={4}>
+          <Typography onClick={() => setClicked(!clicked)}> Expand Map </Typography>
           <Collapse in={clicked} timeout="auto" unmountOnExit>
             <Map vehicle_id={props.vehicle_id} stop_id={props.stop_id} />
           </Collapse>
