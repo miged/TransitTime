@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { CircularProgress, Typography } from '@mui/material';
 
-export default function NoBusTimes(props) {
+export default function NoBusTimes() {
   const [noBus, setNoBus] = useState(false);
 
   useEffect(() => {

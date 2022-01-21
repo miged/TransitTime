@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
-import L from "leaflet";
-import { MapContainer, TileLayer, Marker, Popup, Tooltip } from "react-leaflet";
-import axios from "axios";
-import useInterval from "react-useinterval";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from 'react';
+import L from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet';
+import axios from 'axios';
+import useInterval from 'react-useinterval';
 
 export const Map = (props) => {
   let [map, setMap] = useState(null);
@@ -23,13 +24,13 @@ export const Map = (props) => {
   const point = L.point(0, -18);
 
   const busIcon = L.icon({
-    iconUrl: "./assets/bus_pos.png",
+    iconUrl: './assets/bus_pos.png',
     iconSize: [24.4, 28],
     iconAnchor: [12.2, 28],
   });
 
   const stopIcon = L.icon({
-    iconUrl: "./assets/stop_icon.png",
+    iconUrl: './assets/stop_icon.png',
     iconSize: [18, 18],
     iconAnchor: [9, 9],
   });
@@ -46,7 +47,7 @@ export const Map = (props) => {
       .get(`api/stopLocation/${stopId}`)
       .then((res) => {
         if (Object.keys(res.data).length === 0) {
-          console.log("NO STOPS FOUND!");
+          console.log('NO STOPS FOUND!');
         }
         if (Object.keys(res.data).length !== 0) {
           setStopCoordinate((prev) => ({
@@ -54,7 +55,7 @@ export const Map = (props) => {
             lat: Number(res.data.stop_lat),
             lon: Number(res.data.stop_lon),
           }));
-          console.log("Set stop COORD to:", stopCoordinate);
+          console.log('Set stop COORD to:', stopCoordinate);
         }
       })
       .catch((err) => console.log(err));
@@ -64,7 +65,7 @@ export const Map = (props) => {
       .get(`api/busLocation/${busId}`)
       .then((res) => {
         let data = res.data.position;
-        console.log("Recieved from api: \nBus COORD: ", data);
+        console.log('Recieved from api: \nBus COORD: ', data);
         if (data) {
           setBusCoordinate((prev) => ({
             ...prev,
@@ -88,7 +89,7 @@ export const Map = (props) => {
       .get(`api/busLocation/${busId}`)
       .then((res) => {
         let data = res.data.position;
-        console.log("Recieved from api: \nBus COORD: ", data);
+        console.log('Recieved from api: \nBus COORD: ', data);
         if (data) {
           setBusCoordinate((prev) => ({
             ...prev,
@@ -124,7 +125,7 @@ export const Map = (props) => {
         >
           <Tooltip
             permanent={true}
-            direction={"top"}
+            direction={'top'}
             opacity={0.8}
             offset={point}
           >

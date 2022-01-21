@@ -1,12 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Map } from './Map';
-import {
-  Collapse,
-  TableCell,
-  TableRow,
-  IconButton,
-} from '@mui/material';
+import { Collapse, TableCell, TableRow, IconButton } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 

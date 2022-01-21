@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import BusDropdown from './BusDropdown';
@@ -79,7 +80,7 @@ export default function BusTimes(props) {
           </Table>
         </TableContainer>
       ) : times.stop_id !== undefined ? (
-        <NoBusTimes stop_id={times.stop_id} /> 
+        <NoBusTimes stop_id={times.stop_id} />
       ) : null}
     </Paper>
   );
