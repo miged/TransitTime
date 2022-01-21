@@ -15,6 +15,7 @@ export const Map = (props) => {
     lat: 53.5341,
     lon: -113.50227,
   });
+  let [timeUpdate, setTimeUpdate] = useState(null);
 
   let stopId = props.stop_id;
   let busId = props.vehicle_id;
@@ -34,45 +35,70 @@ export const Map = (props) => {
   });
 
   function SetView(lat, lon) {
-    console.log("Panning to .....");
-    map.panTo([lat, lon]);
-
+    if (map) {
+      map.panTo([lat, lon]);
+    }
     return null;
   }
 
   useEffect(() => {
-    axios.get(`api/stopLocation/${stopId}`).then((res) => {
-      if (Object.keys(res.data).length === 0) {
-        console.log("NO STOPS FOUND");
-      }
-      if (Object.keys(res.data).length !== 0) {
-        setStopCoordinate((prev) => ({
-          ...prev,
-          lat: Number(res.data.stop_lat),
-          lon: Number(res.data.stop_lon),
-        }));
-        console.log("Set STOP to:", stopCoordinate);
-      }
-      // console.log("Set stop coord to:", stopCoordinate);
-    });
-  }, []);
+    axios
+      .get(`api/stopLocation/${stopId}`)
+      .then((res) => {
+        if (Object.keys(res.data).length === 0) {
+          console.log("NO STOPS FOUND!");
+        }
+        if (Object.keys(res.data).length !== 0) {
+          setStopCoordinate((prev) => ({
+            ...prev,
+            lat: Number(res.data.stop_lat),
+            lon: Number(res.data.stop_lon),
+          }));
+          console.log("Set stop COORD to:", stopCoordinate);
+        }
+      })
+      .catch((err) => console.log(err));
 
-  useInterval(() => {
+    // Initial request busLocation
     axios
       .get(`api/busLocation/${busId}`)
       .then((res) => {
         let data = res.data.position;
-        console.log("Bus COORD: ", data);
+        console.log("Recieved from api: \nBus COORD: ", data);
         if (data) {
           setBusCoordinate((prev) => ({
             ...prev,
             lat: data.latitude,
             lon: data.longitude,
           }));
-          SetView(data.latitude, data.longitude);
         }
-        console.log("Set BUS to:", busCoordinate);
-        // console.log(new Date(data.time));
+        // Get time last updated
+        let timeDiff = Math.floor(Date.now() / 1000) - res.data.time.low;
+        setTimeUpdate((prev) => timeDiff);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    SetView(busCoordinate.lat, busCoordinate.lon);
+  }, [busCoordinate]);
+
+  useInterval(() => {
+    axios
+      .get(`api/busLocation/${busId}`)
+      .then((res) => {
+        let data = res.data.position;
+        console.log("Recieved from api: \nBus COORD: ", data);
+        if (data) {
+          setBusCoordinate((prev) => ({
+            ...prev,
+            lat: data.latitude,
+            lon: data.longitude,
+          }));
+        }
+        // Get time last updated
+        let timeDiff = Math.floor(Date.now() / 1000) - res.data.time.low;
+        setTimeUpdate((prev) => timeDiff);
       })
       .catch((err) => console.log(err));
   }, 10000);
@@ -85,7 +111,7 @@ export const Map = (props) => {
           setMap(map);
         }}
         center={[stopCoordinate.lat, stopCoordinate.lon]}
-        zoom={16}
+        zoom={12}
         scrollWheelZoom={false}
       >
         <TileLayer
@@ -102,14 +128,14 @@ export const Map = (props) => {
             opacity={0.8}
             offset={point}
           >
-            30s ago.
+            Updated: {timeUpdate}s ago.
           </Tooltip>
         </Marker>
         <Marker
           icon={stopIcon}
           position={[stopCoordinate.lat, stopCoordinate.lon]}
         >
-          <Popup>Bus Stop: {stopId}</Popup>
+          <Popup>Stop: #{stopId}</Popup>
         </Marker>
       </MapContainer>
     </>

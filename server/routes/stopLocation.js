@@ -4,23 +4,19 @@ const router = express.Router();
 
 module.exports = () => {
   router.get("/:id", (req, res) => {
-    let result = {};
-    let stopId = req.params.id;
+    const stopId = req.params.id;
+    const key = process.env.TRANSITLAND_KEY;
+    const onestopId = "o-c3x-edmontontransitservice";
 
     axios
-      .get("https://data.edmonton.ca/resource/4vt2-8zrq.json")
+      .get(
+        `https://transit.land/api/v2/rest/stops?api_key=${key}&served_by_onestop_ids=${onestopId}&stop_id=${stopId}`
+      )
       .then((feed) => {
-        // console.log(feed.data);
-        let stops = feed.data;
-        for (let stop of stops) {
-          if (stop.stop_id === stopId) {
-            result = stop;
-            break;
-          }
-        }
-        console.log(result);
+        return feed.data.stops[0].geometry.coordinates;
       })
-      .then(() => {
+      .then((lnglat) => {
+        let result = { stop_lat: lnglat[1], stop_lon: lnglat[0] };
         res.json(result);
       })
       .catch((err) => console.log(err));

@@ -7,6 +7,7 @@ import { Collapse, TableBody, TableCell, TableRow, Typography } from '@mui/mater
 export default function BusDropdown(props) {
   const [clicked, setClicked] = useState(false);
   const [trip, setTrip] = useState();
+  const [showMap, setShowMap] = useState(false);
 
   const key = process.env.REACT_APP_TRANSITLAND_KEY;
 
