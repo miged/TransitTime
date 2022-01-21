@@ -27,14 +27,12 @@ function App() {
             display: 'flex',
             justifyContent: 'center',
             flexDirection: 'row',
+            alignItems: 'baseline',
+            gap: 1,
           }}
         >
           <StopSection />
-          <Box
-            sx={{
-              pl: 2,
-            }}
-          >
+          <Box>
             <BusTimes />
           </Box>
         </Box>

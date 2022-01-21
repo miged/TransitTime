@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Button } from '@mui/material';
 import { useAppDispatch } from '../app/hooks';
 import { setSearchResults } from '../app/stopResultsSlice';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
 
 export interface Props {
   sx?: Object;
@@ -34,14 +35,18 @@ export const StopSearchNearby = (props: Props) => {
     const url = `https://transit.land/api/v2/rest/stops?api_key=${key}&lat=${latitude}&lon=${longitude}&radius=750`;
 
     axios.get(url).then((res) => {
-      console.log(res.data.stops);
       dispatch(setSearchResults(res.data.stops));
       props.setLoading(false);
     });
   }
 
   return (
-    <Button variant="contained" disableElevation onClick={getLocation}>
+    <Button
+      variant="contained"
+      disableElevation
+      onClick={getLocation}
+      startIcon={<MyLocationIcon />}
+    >
       Search Nearby
     </Button>
   );

@@ -7,6 +7,7 @@ import {
   Autocomplete,
   CircularProgress,
 } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import {
   setSearchResults,
   setAutocompleteResults,
@@ -99,8 +100,9 @@ export const StopSearch = (props: Props) => {
           variant="contained"
           disableElevation
           onClick={searchClick}
+          aria-label="Search"
         >
-          Search
+          <SearchIcon />
         </Button>
       </Box>
       <Box sx={{ my: 1 }}>
