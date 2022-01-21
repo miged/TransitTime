@@ -1,12 +1,12 @@
-import React from 'react';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import './BusDropdown.css';
-import { Map } from './Map';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import "./BusDropdown.css";
+import { Map } from "./Map";
 
 export default function BusDropdown(props) {
   const [clicked, setClicked] = useState(false);
   const [trip, setTrip] = useState();
+  const [showMap, setShowMap] = useState(false);
 
   const key = process.env.REACT_APP_TRANSITLAND_KEY;
 
@@ -27,16 +27,8 @@ export default function BusDropdown(props) {
       });
   }, [props.trip_id]);
 
-  const clickClass = clicked
-    ? 'expanded-row-content'
-    : 'expanded-row-content hide-row';
-
   const toggleable = () => {
-    if (!clicked) {
-      setClicked(true);
-    } else {
-      setClicked(false);
-    }
+    showMap ? setShowMap(false) : setShowMap(true);
   };
 
   return (
@@ -49,7 +41,9 @@ export default function BusDropdown(props) {
       </tr>
       <tr>
         <td id="map-row">
-          <Map vehicle_id={props.vehicle_id} stop_id={props.stop_id} />
+          {showMap && (
+            <Map vehicle_id={props.vehicle_id} stop_id={props.stop_id} />
+          )}
         </td>
       </tr>
     </tbody>
