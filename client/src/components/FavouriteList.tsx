@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
-import { Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { StopCard } from './StopCard';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { setFavourites } from '../app/stopResultsSlice';
@@ -30,10 +30,5 @@ export const FavouriteList = () => {
     );
   });
 
-  return (
-    <>
-      {results.length > 0 && <Typography>Favorites:</Typography>}
-      {results}
-    </>
-  );
+  return <Box>{results}</Box>;
 };

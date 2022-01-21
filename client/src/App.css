@@ -29,3 +29,7 @@
 #map-row {
   grid-column: 1 / span 4;
 }
+
+/* body {
+  overflow: scroll;
+} */
