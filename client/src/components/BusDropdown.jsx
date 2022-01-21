@@ -5,7 +5,6 @@ import {
   Collapse,
   TableCell,
   TableRow,
-  Typography,
   IconButton,
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -14,7 +13,6 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 export default function BusDropdown(props) {
   const [clicked, setClicked] = useState(false);
   const [trip, setTrip] = useState();
-  const [showMap, setShowMap] = useState(false);
 
   const key = process.env.REACT_APP_TRANSITLAND_KEY;
 

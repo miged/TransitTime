@@ -78,9 +78,9 @@ export default function BusTimes(props) {
             </TableBody>
           </Table>
         </TableContainer>
-      ) : (
-        <NoBusTimes stop_id={times.stop_id} />
-      )}
+      ) : times.stop_id !== undefined ? (
+        <NoBusTimes stop_id={times.stop_id} /> 
+      ) : null}
     </Paper>
   );
 }
