@@ -2,7 +2,8 @@ import axios from 'axios';
 import './BusDropdown.css';
 import { useEffect, useState } from 'react';
 import BusDropdown from './BusDropdown';
-import { Table, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress } from '@mui/material';
+import NoBusTimes from './NoBusTimes';
+import { Table, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { useSelector } from 'react-redux';
 import useInterval from 'react-useinterval';
 
@@ -68,10 +69,7 @@ export default function BusTimes(props) {
           </Table>
         </TableContainer>
       ) : (
-        <>
-          <Table></Table>
-          {times.stop_id && <CircularProgress sx={{ my: 1 }} />}
-        </>
+        <NoBusTimes stop_id={times.stop_id}/>
       )}
     </>
   );
