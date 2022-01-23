@@ -61,7 +61,7 @@ export default function BusTimes(props) {
   });
 
   return (
-    <Paper sx={{ width: 550 }} elevation={1}>
+    <Paper sx={{ width: 650 }} elevation={1}>
       {busTimes.length > 0 ? (
         <TableContainer component={Paper}>
           <Table>
