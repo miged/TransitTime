@@ -16,11 +16,13 @@ const usersRoutes = require("./routes/users");
 const busLocationRoutes = require("./routes/busLocation");
 const tripsRoutes = require("./routes/trips");
 const stopLocationRoutes = require("./routes/stopLocation");
+const busRouteRoutes = require("./routes/busRoute");
 
 app.use("/api/users", usersRoutes());
 app.use("/api/busLocation", busLocationRoutes());
 app.use("/api/trips", tripsRoutes());
 app.use("/api/stopLocation", stopLocationRoutes());
+app.use("/api/busRoute", busRouteRoutes());
 
 // Home page
 // Warning: avoid creating more routes in this file!
