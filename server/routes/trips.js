@@ -29,12 +29,16 @@ module.exports = () => {
         const stopData = feed.entity.forEach((e) => {
           e.tripUpdate.stopTimeUpdate.forEach((s) => {
             if (s.stopId === req.query.stop_id && e.tripUpdate.trip.routeId === req.query.route_id) {
-              const myDate = new Date(s.departure.time.low *1000)
+              let myDate;
+              if (s.arrival === null) {
+                myDate = new Date(s.departure.time.low *1000);
+              } else if (s.departure === null) {
+                myDate = new Date(s.arrival.time.low *1000);
+              };
               const busHMS = myDate.toLocaleTimeString('en-GB', { timeZone: 'America/Edmonton', hour12: false })
               const a = busHMS.split(':');
               const busMinutes = (+a[0]) * 60 + (+a[1]);
               const minutesUntilBus = busMinutes - currentMinutes
-              array.stopId = s.stopId
               array.push({
                 stopId: s.stopId,
                 tripId: e.tripUpdate.trip.tripId,
@@ -52,6 +56,9 @@ module.exports = () => {
         })
         modifiedArray.sort((a,b) => a.time - b.time)
         res.json(JSON.stringify(modifiedArray))
+      })
+      .catch(error => {
+        console.log(error)
       })
   });
 
