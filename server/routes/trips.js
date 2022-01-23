@@ -12,7 +12,18 @@ module.exports = () => {
 
   router.get('/', (req, res) => {
 
-    const url = 'http://gtfs.edmonton.ca/TMGTFSRealTimeWebService/TripUpdate/TripUpdates.pb'
+    let url = 'http://gtfs.edmonton.ca/TMGTFSRealTimeWebService/TripUpdate/TripUpdates.pb'
+    // let url = 'https://data.calgary.ca/download/gs4m-mdc2/application%2Foctet-stream'
+    let timezone = 'America/Edmonton'
+
+    // if (params.query.onestop_id = "o-c3x-edmontontransitservice") {
+    //   url = 'http://gtfs.edmonton.ca/TMGTFSRealTimeWebService/TripUpdate/TripUpdates.pb'
+    //   timezone = 'America/Edmonton'
+    // } else if (params.query.onestop_id = "o-c3nf-calgarytransit") {
+    //   url = 'https://data.calgary.ca/download/gs4m-mdc2/application%2Foctet-stream'
+    //   timezone = 'America/Edmonton'
+    // }
+
     const array = []
 
     axios({
@@ -23,7 +34,7 @@ module.exports = () => {
       .then((res) => {
         const feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(res.data);
         const currentDate = new Date(feed.header.timestamp.low *1000)
-        const modifiedDate = currentDate.toLocaleTimeString('en-GB', { timeZone: 'America/Edmonton', hour12: false })
+        const modifiedDate = currentDate.toLocaleTimeString('en-GB', { timeZone: timezone, hour12: false })
         const b = modifiedDate.split(":");
         const currentMinutes = (+b[0]) * 60 + (+b[1]);
         const stopData = feed.entity.forEach((e) => {
@@ -35,7 +46,7 @@ module.exports = () => {
               } else if (s.departure === null) {
                 myDate = new Date(s.arrival.time.low *1000);
               };
-              const busHMS = myDate.toLocaleTimeString('en-GB', { timeZone: 'America/Edmonton', hour12: false })
+              const busHMS = myDate.toLocaleTimeString('en-GB', { timeZone: timezone, hour12: false })
               const a = busHMS.split(':');
               const busMinutes = (+a[0]) * 60 + (+a[1]);
               const minutesUntilBus = busMinutes - currentMinutes
@@ -58,7 +69,7 @@ module.exports = () => {
         res.json(JSON.stringify(modifiedArray))
       })
       .catch(error => {
-        console.log(error)
+        console.log(error.response)
       })
   });
 
