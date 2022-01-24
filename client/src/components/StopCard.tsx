@@ -62,12 +62,7 @@ export const StopCard = (props: Props) => {
           route_name={props.route_name}
         />
       </Box>
-      <Button
-        disableElevation
-        variant="contained"
-        onClick={showTimesClick}
-        href="#"
-      >
+      <Button disableElevation variant="contained" onClick={showTimesClick}>
         Show Times
       </Button>
     </Card>
