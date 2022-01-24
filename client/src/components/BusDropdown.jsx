@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { Map } from './Map';
-import { Collapse, TableCell, TableRow, IconButton } from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Map } from "./Map";
+import { Collapse, TableCell, TableRow, IconButton } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 export default function BusDropdown(props) {
   const [clicked, setClicked] = useState(false);
@@ -49,7 +49,11 @@ export default function BusDropdown(props) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
           <Collapse in={clicked} timeout="auto" unmountOnExit>
-            <Map vehicle_id={props.vehicle_id} stop_id={props.stop_id} />
+            <Map
+              vehicle_id={props.vehicle_id}
+              stop_id={props.stop_id}
+              route_id={props.route_id}
+            />
           </Collapse>
         </TableCell>
       </TableRow>
