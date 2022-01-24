@@ -33,7 +33,7 @@ export const FavouriteList = () => {
   return (
     <Box>
       {results.length > 0 ? (
-        { results }
+        results
       ) : (
         <Typography>
           You have no favourites saved.
