@@ -1,9 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import L from "leaflet";
-import { MapContainer, TileLayer, Marker, Popup, Tooltip } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  Tooltip,
+  Circle,
+} from "react-leaflet";
 import axios from "axios";
 import useInterval from "react-useinterval";
+// import { useTheme } from "@mui/material/styles";
 
 export const Map = (props) => {
   let [map, setMap] = useState(null);
@@ -17,11 +25,21 @@ export const Map = (props) => {
     lon: -113.50227,
   });
   let [timeUpdate, setTimeUpdate] = useState(null);
+  let [routeMarkers, setRouteMarkers] = useState([]);
 
   let stopId = props.stop_id;
   let busId = props.vehicle_id;
+  let routeId = props.route_id;
 
-  const mapKey = process.env.MAPBOX_KEY;
+  // Mapbox config
+  const mapKey = process.env.REACT_APP_MAPBOX_KEY;
+  let style = "ckyqkh1f811fy14k876mhrntc";
+
+  // useEffect(() => {
+  //   props.mode === "dark"
+  //     ? (style = "ckyqkh1f811fy14k876mhrntc")
+  //     : (style = "ckyqr2lq1062y15ljbgv22gzf");
+  // });
 
   const point = L.point(0, -18);
 
@@ -64,6 +82,26 @@ export const Map = (props) => {
       .catch((err) => console.log(err));
   };
 
+  const fetchRoute = () => {
+    axios
+      .get(`api/busRoute/${routeId}`)
+      .then((res) => {
+        let stopMarkers = res.data.map((obj) => {
+          return (
+            <Circle
+              center={[obj.lat, obj.lon]}
+              pathOptions={{ color: "blue" }}
+              radius={4}
+            />
+          );
+        });
+        return stopMarkers;
+      })
+      .then((data) => {
+        setRouteMarkers(data);
+      });
+  };
+
   useEffect(() => {
     axios
       .get(`api/stopLocation/${stopId}`)
@@ -84,11 +122,14 @@ export const Map = (props) => {
 
     // Initial request busLocation
     fetchBus();
+
+    //Initial route request
+    fetchRoute();
   }, []);
 
   useEffect(() => {
     SetView(busCoordinate.lat, busCoordinate.lon);
-  }, [busCoordinate]);
+  }, []);
 
   useInterval(() => {
     fetchBus();
@@ -107,7 +148,7 @@ export const Map = (props) => {
       >
         <TileLayer
           attribution='&copy; <a href="https://www.mapbox.com/">Mapbox</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          url={`https://api.mapbox.com/styles/v1/shoumik2022/ckyqkh1f811fy14k876mhrntc/tiles/256/{z}/{x}/{y}@2x?access_token=${mapKey}`}
+          url={`https://api.mapbox.com/styles/v1/shoumik2022/${style}/tiles/256/{z}/{x}/{y}@2x?access_token=${mapKey}`}
         />
         <Marker
           icon={busIcon}
@@ -128,6 +169,7 @@ export const Map = (props) => {
         >
           <Popup>Stop: #{stopId}</Popup>
         </Marker>
+        {routeMarkers}
       </MapContainer>
     </>
   );
