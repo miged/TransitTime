@@ -5,9 +5,8 @@ import { useAppSelector } from '../app/hooks';
 export const NearbyMap = () => {
   const pos = useAppSelector((state) => state.stopResults.location);
   const results = useAppSelector((state) => state.stopResults.searchResults);
-
   const mapKey = process.env.REACT_APP_MAPBOX_KEY;
-  let style = 'ckyqkh1f811fy14k876mhrntc';
+  const style = 'ckyqkh1f811fy14k876mhrntc';
 
   const stops = results.map((s) => {
     return (
