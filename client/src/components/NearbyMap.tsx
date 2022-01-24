@@ -13,7 +13,7 @@ export const NearbyMap = () => {
         position={[s.geometry.coordinates[1], s.geometry.coordinates[0]]}
       >
         <Popup>
-          {s.stop_name} ({s.stop_id})
+          {s.stop_name} ({s.stop_code})
         </Popup>
       </Marker>
     );

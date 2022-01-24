@@ -23,7 +23,7 @@ export interface Props {
 }
 
 interface Stop {
-  stop_id: string;
+  stop_code: string;
   stop_name: string;
 }
 
@@ -49,7 +49,7 @@ export const StopSearch = (props: Props) => {
           const stops = res.data.stops.filter((s: Stop) => {
             const stop_name = name.split('-')[0].toLowerCase().trim();
             return (
-              s.stop_id.toLowerCase().includes(stop_name) ||
+              s.stop_code.toLowerCase().includes(stop_name) ||
               s.stop_name.toLowerCase().includes(stop_name)
             );
           });
@@ -92,7 +92,7 @@ export const StopSearch = (props: Props) => {
           size="small"
           freeSolo
           options={autocomplete}
-          getOptionLabel={(o) => `${o.stop_id} - ${o.stop_name}`}
+          getOptionLabel={(o) => `${o.stop_code} - ${o.stop_name}`}
           renderInput={(params) => (
             <TextField {...params} label="Stop ID/Name" />
           )}

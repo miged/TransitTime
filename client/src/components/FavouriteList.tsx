@@ -21,8 +21,8 @@ export const FavouriteList = () => {
     return (
       <StopCard
         sx={{ my: 1 }}
-        key={f.stop_id + f.route_id}
-        stop_id={f.stop_id}
+        key={f.stop_code + f.route_id}
+        stop_code={f.stop_code}
         stop_name={f.stop_name}
         route_id={f.route_id}
         route_num={f.route_num}

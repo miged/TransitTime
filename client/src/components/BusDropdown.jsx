@@ -49,7 +49,7 @@ export default function BusDropdown(props) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
           <Collapse in={clicked} timeout="auto" unmountOnExit>
-            <Map vehicle_id={props.vehicle_id} stop_id={props.stop_id} />
+            <Map vehicle_id={props.vehicle_id} stop_code={props.stop_code} />
           </Collapse>
         </TableCell>
       </TableRow>

@@ -18,7 +18,7 @@ export const Map = (props) => {
   });
   let [timeUpdate, setTimeUpdate] = useState(null);
 
-  let stopId = props.stop_id;
+  let stopId = props.stop_code;
   let busId = props.vehicle_id;
 
   const point = L.point(0, -18);

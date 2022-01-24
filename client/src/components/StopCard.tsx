@@ -5,7 +5,7 @@ import { setTimes, clearLocation } from '../app/stopResultsSlice';
 
 export interface Props {
   sx?: Object;
-  stop_id: string;
+  stop_code: string;
   stop_name: string;
   route_id: string;
   route_num: string;
@@ -20,7 +20,7 @@ export const StopCard = (props: Props) => {
     dispatch(clearLocation());
     dispatch(
       setTimes({
-        stop_id: props.stop_id,
+        stop_code: props.stop_code,
         stop_name: props.stop_name,
         route_id: props.route_id,
         route_num: props.route_num,
@@ -52,12 +52,12 @@ export const StopCard = (props: Props) => {
           }}
         >
           <Typography>
-            {props.stop_name} ({props.stop_id})
+            {props.stop_name} ({props.stop_code})
           </Typography>
           <Typography>{props.route_name}</Typography>
         </Box>
         <FavouriteButton
-          stop_id={props.stop_id}
+          stop_code={props.stop_code}
           stop_name={props.stop_name}
           route_id={props.route_id}
           route_num={props.route_num}

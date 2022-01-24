@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material';
 
 interface Stop {
   id: number;
-  stop_id: string;
+  stop_code: string;
   stop_name: string;
   route_stops: RouteStop[];
 }
@@ -33,12 +33,12 @@ export const StopResults = () => {
           <StopCard
             sx={{ my: 1 }}
             key={s.id + r.route.route_short_name}
-            stop_id={s.stop_id}
+            stop_code={s.stop_code}
             stop_name={s.stop_name}
             route_id={r.route.route_id}
             route_num={r.route.route_short_name}
             route_name={r.route.route_long_name}
-            agency={r.route.agency.onestop_id}
+            agency={r.route.agency.onestop_code}
           />
         );
       } else {

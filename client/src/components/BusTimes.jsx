@@ -30,7 +30,7 @@ export default function BusTimes(props) {
     axios
       .get('http://localhost:8080/api/trips', {
         params: {
-          stop_id: times.stop_id,
+          stop_id: times.stop_code,
           route_id: times.route_id,
           agency: times.agency,
         },
@@ -54,7 +54,7 @@ export default function BusTimes(props) {
     return (
       <BusDropdown
         key={uniqueId()}
-        stop_id={data.stopId}
+        stop_code={data.stopId}
         trip_id={data.tripId}
         route_id={data.routeId}
         route_name={times.route_name}
@@ -83,7 +83,7 @@ export default function BusTimes(props) {
             </TableBody>
           </Table>
         </TableContainer>
-      ) : times.stop_id !== undefined ? (
+      ) : times.stop_code !== undefined ? (
         <Paper sx={{ py: 1 }} elevation={1}>
           <NoBusTimes
             loading={loading}
