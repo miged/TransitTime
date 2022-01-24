@@ -6,22 +6,14 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
-model User {
-  id        Int         @id @default(autoincrement())
-  email     String      @unique
-  name      String
-  password  String
-  Favourite Favourite[]
-}
-
-model Favourite {
-  id      Int    @id @default(autoincrement())
-  user    User   @relation(fields: [userId], references: [id])
-  userId  Int
-  stop_id Int
-  city    String
+model Stop {
+  id      Int     @id @default(autoincrement())
+  stop_id String? @unique
+  name    String?
+  lat     Float?
+  lon     Float?
 }
