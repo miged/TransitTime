@@ -32,7 +32,7 @@ export const StopSearchNearby = (props: Props) => {
   function nearbySearch(pos: Position) {
     const { latitude, longitude } = pos.coords;
     const key = process.env.REACT_APP_TRANSITLAND_KEY;
-    const url = `https://transit.land/api/v2/rest/stops?api_key=${key}&lat=${latitude}&lon=${longitude}&radius=750`;
+    const url = `https://transit.land/api/v2/rest/stops?api_key=${key}&lat=${latitude}&lon=${longitude}&radius=900`;
 
     axios.get(url).then((res) => {
       dispatch(setSearchResults(res.data.stops));

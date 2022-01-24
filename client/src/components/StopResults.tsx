@@ -21,7 +21,7 @@ interface Route {
 
 export const StopResults = () => {
   const stops = useAppSelector((state) => state.stopResults.searchResults);
-  const maxResults = 30;
+  const maxResults = 50;
   let count = 0;
 
   const results = stops.map((s: Stop) => {
