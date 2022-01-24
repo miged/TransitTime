@@ -1,8 +1,8 @@
 import './App.css';
 import React from 'react';
-import { StopSection } from './components/StopSection';
 import { Header } from './components/Header';
-import BusTimes from './components/BusTimes';
+import { StopSection } from './components/StopSection';
+import { RightSection } from './components/RightSection';
 import { Box } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getDesignTokens } from './theme';
@@ -27,12 +27,12 @@ function App() {
             display: 'flex',
             justifyContent: 'center',
             flexDirection: 'row',
-            alignItems: 'baseline',
+            alignItems: 'flex-start',
             gap: 1,
           }}
         >
           <StopSection />
-          <BusTimes />
+          <RightSection />
         </Box>
       </main>
     </ThemeProvider>

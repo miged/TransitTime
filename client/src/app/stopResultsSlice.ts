@@ -5,6 +5,12 @@ interface ResultsState {
   autocompleteResults: any[];
   favourites: any[];
   times: Object;
+  location: Coordinates;
+}
+
+interface Coordinates {
+  latitude: number;
+  longitude: number;
 }
 
 const initialState: ResultsState = {
@@ -12,6 +18,7 @@ const initialState: ResultsState = {
   autocompleteResults: [],
   favourites: [],
   times: {},
+  location: { latitude: 0, longitude: 0 },
 };
 
 export const stopResultsSlice = createSlice({
@@ -30,6 +37,12 @@ export const stopResultsSlice = createSlice({
     setTimes: (state, action) => {
       state.times = action.payload;
     },
+    setLocation: (state, action) => {
+      state.location = action.payload;
+    },
+    clearLocation: (state) => {
+      state.location = { latitude: 0, longitude: 0 };
+    },
   },
 });
 
@@ -39,6 +52,8 @@ export const {
   setAutocompleteResults,
   setFavourites,
   setTimes,
+  setLocation,
+  clearLocation,
 } = stopResultsSlice.actions;
 
 export default stopResultsSlice.reducer;
