@@ -1,32 +1,51 @@
 const axios = require("axios");
 const express = require("express");
 const router = express.Router();
+const { PrismaClient } = require("@prisma/client");
 
 module.exports = () => {
   router.get("/:id", (req, res) => {
     const routeId = req.params.id;
     const key = process.env.TRANSITLAND_KEY;
     const onestopId = "o-c3x-edmontontransitservice";
+    const prisma = new PrismaClient();
 
     axios
       .get(
-        `https://transit.land/api/v2/rest/stops?api_key=${key}&served_by_onestop_ids=${onestopId}&route_id=${routeId}`
+        `https://transit.land/api/v2/rest/routes?api_key=${key}&operator_onestop_id=${onestopId}&route_id=${routeId}`
       )
       .then((feed) => {
-        console.log("ROUTE DATA SENT");
+        console.log(`ROUTE DATA SENT FOR: ${routeId}`);
         let result = [];
-        feed.data.stops.forEach((element) => {
-          let stop = {};
-          stop["latitude"] = element.geometry.coordinates[1];
-          stop["longitude"] = element.geometry.coordinates[0];
-          stop["stopId"] = element.stop_id;
-          stop["name"] = element.stop_name;
-          result.push(stop);
+        feed.data.routes[0].route_stops.forEach((element) => {
+          result.push(element.stop.stop_id);
         });
         return result;
       })
-      .then((result) => {
-        res.json(result);
+      .then((stops) => {
+        async function main() {
+          let dbResult = [];
+          for (let stop of stops) {
+            const row = await prisma.stop.findUnique({
+              where: {
+                stop_id: stop,
+              },
+            });
+            dbResult.push(row);
+          }
+          return dbResult;
+        }
+
+        main()
+          .then((stopArr) => {
+            res.json(stopArr);
+          })
+          .catch((e) => {
+            throw e;
+          })
+          .finally(async () => {
+            await prisma.$disconnect();
+          });
       })
       .catch((err) => console.log(err));
   });
