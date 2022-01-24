@@ -11,7 +11,7 @@ axios
     let stops = [];
     for (val of res.data.data) {
       stops.push({
-        stop_id: val[9],
+        stop_id: val[8],
         name: val[10],
         lat: Number(val[12]),
         lon: Number(val[13]),
