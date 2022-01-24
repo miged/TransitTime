@@ -28,7 +28,7 @@ export const StopCard = (props: Props) => {
   }
 
   return (
-    <Card sx={{ width: 500, p: 2, ...props.sx }} elevation={4}>
+    <Card sx={{ width: 510, p: 2, ...props.sx }} elevation={4}>
       <Box
         sx={{
           display: 'flex',
