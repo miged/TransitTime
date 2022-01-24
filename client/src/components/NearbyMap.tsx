@@ -27,7 +27,7 @@ export const NearbyMap = () => {
 
   return (
     <Paper>
-      <Typography sx={{ p: 1 }}>Nearby Stops</Typography>
+      <Typography sx={{ p: 1.5 }}>Nearby Stops</Typography>
       <MapContainer
         className="nearby-map"
         center={[pos.latitude, pos.longitude]}
