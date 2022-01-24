@@ -11,6 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import {
   setSearchResults,
   setAutocompleteResults,
+  clearLocation,
 } from '../app/stopResultsSlice';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { StopSearchNearby } from './StopSearchNearby';
@@ -68,6 +69,7 @@ export const StopSearch = (props: Props) => {
     if (stop.length !== 0) {
       setLoading(true);
       dispatch(setSearchResults([]));
+      dispatch(clearLocation());
       searchStop(stop, false);
     }
   }
