@@ -63,7 +63,7 @@ export const Map = (props) => {
   };
 
   const fetchBus = () => {
-    axios
+    return axios
       .get(`api/busLocation/${busId}`)
       .then((res) => {
         let data = res.data.position;
@@ -78,6 +78,7 @@ export const Map = (props) => {
         // Get time last updated
         let timeDiff = Math.floor(Date.now() / 1000) - res.data.time.low;
         setTimeUpdate((prev) => timeDiff);
+        return data;
       })
       .catch((err) => console.log(err));
   };
@@ -121,15 +122,20 @@ export const Map = (props) => {
       .catch((err) => console.log(err));
 
     // Initial request busLocation
-    fetchBus();
+    fetchBus().then((data) => {
+      setTimeout(() => {
+        console.log("Running setview...", data.latitude, data.longitude);
+        SetView(data.latitude, data.longitude);
+      }, 1000);
+    });
 
     //Initial route request
     fetchRoute();
   }, []);
 
-  useEffect(() => {
-    SetView(busCoordinate.lat, busCoordinate.lon);
-  }, []);
+  // useEffect(() => {
+  //   SetView(busCoordinate.lat, busCoordinate.lon);
+  // }, []);
 
   useInterval(() => {
     fetchBus();
@@ -153,6 +159,11 @@ export const Map = (props) => {
         <Marker
           icon={busIcon}
           position={[busCoordinate.lat, busCoordinate.lon]}
+          eventHandlers={{
+            click: (e) => {
+              SetView(busCoordinate.lat, busCoordinate.lon);
+            },
+          }}
         >
           <Tooltip
             permanent={true}
