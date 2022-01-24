@@ -24,7 +24,12 @@ export const Header = (props: any) => {
       >
         TransitTime
       </Typography>
-      <IconButton sx={{ ml: 1 }} onClick={props.colorMode} color="inherit">
+      <IconButton
+        sx={{ ml: 1 }}
+        onClick={props.colorMode}
+        color="inherit"
+        aria-label="Set Light/Dark Mode"
+      >
         {theme.palette.mode === 'dark' ? (
           <Brightness7Icon />
         ) : (

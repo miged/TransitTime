@@ -72,9 +72,9 @@ export const FavouriteButton = (props: Favourite) => {
 
   return (
     <IconButton
-      aria-label="fav"
       color="primary"
       onClick={() => favouriteClick(stopInfo)}
+      aria-label="Favourite"
     >
       {clicked ? <StarIcon /> : <StarBorderIcon />}
     </IconButton>
