@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { CircularProgress, Typography } from '@mui/material';
 
 export interface Props {
