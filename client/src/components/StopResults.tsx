@@ -17,6 +17,7 @@ interface Route {
   route_id: string;
   route_short_name: string;
   route_long_name: string;
+  agency: any;
 }
 
 export const StopResults = () => {
@@ -37,6 +38,7 @@ export const StopResults = () => {
             route_id={r.route.route_id}
             route_num={r.route.route_short_name}
             route_name={r.route.route_long_name}
+            agency={r.route.agency.onestop_id}
           />
         );
       } else {
@@ -44,6 +46,8 @@ export const StopResults = () => {
       }
     });
   });
+
+  console.log(results);
 
   return (
     <Box>

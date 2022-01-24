@@ -5,14 +5,8 @@ import { useAppSelector } from '../app/hooks';
 export const NearbyMap = () => {
   const pos = useAppSelector((state) => state.stopResults.location);
   const results = useAppSelector((state) => state.stopResults.searchResults);
-  console.log('results', results);
 
   const stops = results.map((s) => {
-    const routes = s.route_stops.map((r: any) => {
-      return `${r.route.route_short_name} - ${r.route.route_long_name}`;
-    });
-    console.log(routes);
-
     return (
       <Marker
         key={s.id}

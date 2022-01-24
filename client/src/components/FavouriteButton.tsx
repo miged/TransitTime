@@ -14,6 +14,7 @@ export interface Favourite {
   route_id: string;
   route_num: string;
   route_name: string;
+  agency: string;
 }
 
 export const FavouriteButton = (props: Favourite) => {

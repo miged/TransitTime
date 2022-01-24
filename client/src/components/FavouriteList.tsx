@@ -10,6 +10,7 @@ export const FavouriteList = () => {
   const dispatch = useAppDispatch();
   const [cookies] = useCookies(['favourites']);
   const faves = useAppSelector((state) => state.stopResults.favourites);
+  console.log(faves);
 
   if (!load) {
     cookies.favourites && dispatch(setFavourites(cookies.favourites));
@@ -26,6 +27,7 @@ export const FavouriteList = () => {
         route_id={f.route_id}
         route_num={f.route_num}
         route_name={f.route_name}
+        agency={f.agency}
       />
     );
   });

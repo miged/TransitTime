@@ -32,6 +32,7 @@ export default function BusTimes(props) {
         params: {
           stop_id: times.stop_id,
           route_id: times.route_id,
+          agency: times.agency,
         },
       })
       .then((response) => {

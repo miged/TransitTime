@@ -10,6 +10,7 @@ export interface Props {
   route_id: string;
   route_num: string;
   route_name: string;
+  agency: string;
 }
 
 export const StopCard = (props: Props) => {
@@ -24,6 +25,7 @@ export const StopCard = (props: Props) => {
         route_id: props.route_id,
         route_num: props.route_num,
         route_name: props.route_name,
+        agency: props.agency,
       })
     );
   }
@@ -60,6 +62,7 @@ export const StopCard = (props: Props) => {
           route_id={props.route_id}
           route_num={props.route_num}
           route_name={props.route_name}
+          agency={props.agency}
         />
       </Box>
       <Button disableElevation variant="contained" onClick={showTimesClick}>
