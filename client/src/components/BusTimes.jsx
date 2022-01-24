@@ -17,6 +17,7 @@ import useInterval from 'react-useinterval';
 
 export default function BusTimes(props) {
   const [GTFS, setGTFS] = useState([]);
+  const [loading, setLoading] = useState(false);
   const times = useSelector((state) => state.stopResults.times);
 
   let uniqueIdCount = 0;
@@ -36,11 +37,13 @@ export default function BusTimes(props) {
       .then((response) => {
         let parsedFeeds = JSON.parse(response.data);
         setGTFS(parsedFeeds);
+        setLoading(false);
       });
   };
 
   useEffect(() => {
     setGTFS([]);
+    setLoading(true);
     refreshData(true);
   }, [times]);
 
@@ -81,7 +84,11 @@ export default function BusTimes(props) {
         </TableContainer>
       ) : times.stop_id !== undefined ? (
         <Paper sx={{ py: 1 }} elevation={1}>
-          <NoBusTimes stop={times.stop_name} route={times.route_name} />
+          <NoBusTimes
+            loading={loading}
+            stop={times.stop_name}
+            route={times.route_name}
+          />
         </Paper>
       ) : null}
     </>
