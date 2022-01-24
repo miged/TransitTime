@@ -12,7 +12,7 @@ datasource db {
 
 model Stop {
   id      Int     @id @default(autoincrement())
-  stop_id String?
+  stop_id String? @unique
   name    String?
   lat     Float?
   lon     Float?
