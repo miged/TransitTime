@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { CircularProgress, Typography } from '@mui/material';
+import { useEffect, useState } from "react";
+import { CircularProgress, Typography } from "@mui/material";
 
 export default function NoBusTimes() {
   const [noBus, setNoBus] = useState(false);
@@ -8,6 +8,8 @@ export default function NoBusTimes() {
     setTimeout(() => {
       setNoBus(true);
     }, 5000);
+
+    return () => clearInterval();
   }, []);
 
   return !noBus ? (
