@@ -1,7 +1,7 @@
 import { Box, Card, Typography, Button } from '@mui/material';
 import { useAppDispatch } from '../app/hooks';
 import { FavouriteButton } from './FavouriteButton';
-import { setTimes } from '../app/stopResultsSlice';
+import { setTimes, clearLocation } from '../app/stopResultsSlice';
 
 export interface Props {
   sx?: Object;
@@ -16,6 +16,7 @@ export const StopCard = (props: Props) => {
   const dispatch = useAppDispatch();
 
   function showTimesClick() {
+    dispatch(clearLocation());
     dispatch(
       setTimes({
         stop_id: props.stop_id,
