@@ -6,6 +6,9 @@ export const NearbyMap = () => {
   const pos = useAppSelector((state) => state.stopResults.location);
   const results = useAppSelector((state) => state.stopResults.searchResults);
 
+  const mapKey = process.env.REACT_APP_MAPBOX_KEY;
+  let style = 'ckyqkh1f811fy14k876mhrntc';
+
   const stops = results.map((s) => {
     return (
       <Marker
@@ -30,7 +33,7 @@ export const NearbyMap = () => {
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url={`https://api.mapbox.com/styles/v1/shoumik2022/${style}/tiles/256/{z}/{x}/{y}@2x?access_token=${mapKey}`}
         />
         {stops}
       </MapContainer>
