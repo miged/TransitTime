@@ -30,6 +30,10 @@
   grid-column: 1 / span 4;
 }
 
+.nearby-map {
+  height: 600px;
+}
+
 /* body {
   overflow: scroll;
 } */

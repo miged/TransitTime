@@ -29,7 +29,7 @@ export const NearbyMap = () => {
     <Paper>
       <Typography sx={{ p: 1 }}>Nearby Stops</Typography>
       <MapContainer
-        id="map"
+        className="nearby-map"
         center={[pos.latitude, pos.longitude]}
         zoom={15}
         scrollWheelZoom={false}
