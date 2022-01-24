@@ -20,6 +20,7 @@ export const StopCard = (props: Props) => {
     dispatch(
       setTimes({
         stop_id: props.stop_id,
+        stop_name: props.stop_name,
         route_id: props.route_id,
         route_num: props.route_num,
         route_name: props.route_name,

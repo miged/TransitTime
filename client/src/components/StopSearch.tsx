@@ -6,6 +6,7 @@ import {
   Button,
   Autocomplete,
   CircularProgress,
+  Typography,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import {
@@ -110,7 +111,12 @@ export const StopSearch = (props: Props) => {
       <Box sx={{ my: 1 }}>
         <StopSearchNearby setLoading={setLoading} />
       </Box>
-      {loading && <CircularProgress sx={{ my: 1 }} />}
+      {loading && (
+        <>
+          <CircularProgress sx={{ my: 1 }} />
+          <Typography>Searching for stops...</Typography>
+        </>
+      )}
     </Box>
   );
 };

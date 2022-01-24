@@ -80,7 +80,9 @@ export default function BusTimes(props) {
           </Table>
         </TableContainer>
       ) : times.stop_id !== undefined ? (
-        <NoBusTimes stop_id={times.stop_id} />
+        <Paper sx={{ py: 1 }} elevation={1}>
+          <NoBusTimes stop={times.stop_name} route={times.route_name} />
+        </Paper>
       ) : null}
     </>
   );

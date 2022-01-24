@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { StopCard } from './StopCard';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { setFavourites } from '../app/stopResultsSlice';
@@ -30,5 +30,17 @@ export const FavouriteList = () => {
     );
   });
 
-  return <Box>{results}</Box>;
+  return (
+    <Box>
+      {results.length > 0 ? (
+        { results }
+      ) : (
+        <Typography>
+          You have no favourites saved.
+          <br />
+          Click on the ⭐ next to a stop to favourite it.
+        </Typography>
+      )}
+    </Box>
+  );
 };
