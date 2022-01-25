@@ -59,7 +59,6 @@ module.exports = () => {
           return arr.time > 0
         })
         modifiedArray.sort((a,b) => a.time - b.time)
-        console.log(modifiedArray)
         res.json(JSON.stringify(modifiedArray))
       })
       .catch(error => {
@@ -80,22 +79,19 @@ module.exports = () => {
       .then((res) => {
         const array = [];
         const feed = res.data
-        console.log(feed);
         feed.predictions.direction.prediction.forEach(element => {
-          console.log(element)
           array.push({
             stopId: feed.predictions.stopTag,
             tripId: element.tripTag,
             routeId: req.query.route_id,
             time: element.minutes,
             vehicleID: element.vehicle,
+            direction: feed.predictions.direction.title
           })
         })
-        console.log(array)
         return array;
       })
       .then((array) => {
-        console.log(array);
         res.json(JSON.stringify(array))
       })
       .catch(error => {
