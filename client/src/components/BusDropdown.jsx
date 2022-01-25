@@ -15,7 +15,7 @@ export default function BusDropdown(props) {
   useEffect(() => {
     axios
       .get(
-        `https://transit.land/api/v2/rest/routes?operator_onestop_id=o-c3x-edmontontransitservice&route_id=${props.route_id}&api_key=${key}`
+        `https://transit.land/api/v2/rest/routes?operator_onestop_id=${props.agency}&route_id=${props.route_id}&api_key=${key}`
       )
       .then((response) => {
         const onestop_id = response.data.routes[0].onestop_id;

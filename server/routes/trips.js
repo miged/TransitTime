@@ -100,10 +100,9 @@ module.exports = () => {
             array.push({
               stopId: parsedFeed.predictions.stopTag,
               tripId: element.tripTag,
-              routeId: parsedFeed.predictions.routeTag,
+              routeId: req.query.route_id,
               time: element.minutes,
-              vehicleID: element.vehicle,
-              direction: parsedFeed.predictions.direction.title
+              vehicleID: element.vehicle
             });
           });
         })
