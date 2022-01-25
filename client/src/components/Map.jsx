@@ -11,7 +11,6 @@ import {
 } from "react-leaflet";
 import axios from "axios";
 import useInterval from "react-useinterval";
-// import { useTheme } from "@mui/material/styles";
 
 export const Map = (props) => {
   let [map, setMap] = useState(null);
@@ -30,16 +29,12 @@ export const Map = (props) => {
   let stopId = props.stop_code;
   let busId = props.vehicle_id;
   let routeId = props.route_id;
+  // let agency = props.agency
+  let agency = "ets";
 
   // Mapbox config
   const mapKey = process.env.REACT_APP_MAPBOX_KEY;
   let style = "ckyqkh1f811fy14k876mhrntc";
-
-  // useEffect(() => {
-  //   props.mode === "dark"
-  //     ? (style = "ckyqkh1f811fy14k876mhrntc")
-  //     : (style = "ckyqr2lq1062y15ljbgv22gzf");
-  // });
 
   const point = L.point(0, -18);
 
@@ -57,6 +52,7 @@ export const Map = (props) => {
 
   const SetView = (lat, lon) => {
     if (map) {
+      console.log("panning........");
       map.panTo([lat, lon]);
     }
     return null;
@@ -64,7 +60,7 @@ export const Map = (props) => {
 
   const fetchBus = () => {
     return axios
-      .get(`api/busLocation/${busId}`)
+      .get(`api/busLocation/${agency}/${busId}`)
       .then((res) => {
         let data = res.data.position;
         console.log("Recieved from api: \nBus COORD: ", data);
@@ -90,8 +86,9 @@ export const Map = (props) => {
         let stopMarkers = res.data.map((obj) => {
           return (
             <Circle
+              key={obj.stop_id}
               center={[obj.lat, obj.lon]}
-              pathOptions={{ color: "blue" }}
+              pathOptions={{ color: "yellow" }}
               radius={4}
             />
           );
@@ -121,21 +118,9 @@ export const Map = (props) => {
       })
       .catch((err) => console.log(err));
 
-    // Initial request busLocation
-    fetchBus().then((data) => {
-      setTimeout(() => {
-        console.log("Running setview...", data.latitude, data.longitude);
-        SetView(data.latitude, data.longitude);
-      }, 1000);
-    });
-
     //Initial route request
     fetchRoute();
   }, []);
-
-  // useEffect(() => {
-  //   SetView(busCoordinate.lat, busCoordinate.lon);
-  // }, []);
 
   useInterval(() => {
     fetchBus();
@@ -147,8 +132,11 @@ export const Map = (props) => {
         id="map"
         whenCreated={(map) => {
           setMap(map);
+          fetchBus().then((data) => {
+            map.panTo([data.latitude, data.longitude]);
+          });
         }}
-        center={[stopCoordinate.lat, stopCoordinate.lon]}
+        center={[busCoordinate.lat, busCoordinate.lon]}
         zoom={12}
         scrollWheelZoom={false}
       >
@@ -178,7 +166,7 @@ export const Map = (props) => {
           icon={stopIcon}
           position={[stopCoordinate.lat, stopCoordinate.lon]}
         >
-          <Popup>Stop: #{stopId}</Popup>
+          <Popup>Your stop: #{stopId}</Popup>
         </Marker>
         {routeMarkers}
       </MapContainer>
