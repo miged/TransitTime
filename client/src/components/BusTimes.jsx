@@ -30,12 +30,14 @@ export default function BusTimes(props) {
     axios
       .get('http://localhost:8080/api/trips', {
         params: {
-          stop_id: times.stop_code,
+          stop_id: times.stop_id,
           route_id: times.route_id,
+          route_num: times.route_num,
           agency: times.agency,
         },
       })
       .then((response) => {
+        console.log(response.data);
         let parsedFeeds = JSON.parse(response.data);
         setGTFS(parsedFeeds);
         setLoading(false);
@@ -58,8 +60,11 @@ export default function BusTimes(props) {
         trip_id={data.tripId}
         route_id={data.routeId}
         route_name={times.route_name}
+        route_num={times.route_num}
         time={data.time}
         vehicle_id={data.vehicleID}
+        agency={times.agency}
+        short_name={data.shortName}
       />
     );
   });

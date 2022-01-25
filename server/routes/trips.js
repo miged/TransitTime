@@ -59,6 +59,7 @@ module.exports = () => {
           return arr.time > 0
         })
         modifiedArray.sort((a,b) => a.time - b.time)
+        console.log(modifiedArray)
         res.json(JSON.stringify(modifiedArray))
       })
       .catch(error => {
@@ -68,30 +69,33 @@ module.exports = () => {
 
     // TTC get Request. Used if a stop in TTC(Toronto) network is selected.
     const ttcGet = () => {
-      const url = `https://retro.umoiq.com/service/publicJSONFeed?command=predictions&a=ttc&r=${req.params.route_id}&s=${req.params.stop_id}`
-      const array = [];
+
+      let url = `https://retro.umoiq.com/service/publicJSONFeed?command=predictions&a=ttc&r=${req.query.route_num}&s=${req.query.stop_id}`
+      console.log(url)
 
       axios({
         method: "GET",
-        url: url,
-        responseType: "arraybuffer",
+        url: url
       })
       .then((res) => {
+        const array = [];
         const feed = res.data
-        const stringFeed = feed.toString();
-        const parsedFeed = JSON.parse(stringFeed)
-        parsedFeed.predictions.direction.prediction.forEach(element => {
+        console.log(feed);
+        feed.predictions.direction.prediction.forEach(element => {
+          console.log(element)
           array.push({
-            stopId: parsedFeed.predictions.stopTag,
+            stopId: feed.predictions.stopTag,
             tripId: element.tripTag,
-            routeId: parsedFeed.predictions.routeTag,
+            routeId: req.query.route_id,
             time: element.minutes,
             vehicleID: element.vehicle,
-            direction: parsedFeed.predictions.direction.title
-          });
-        });
+          })
+        })
+        console.log(array)
+        return array;
       })
-      .then(() => {
+      .then((array) => {
+        console.log(array);
         res.json(JSON.stringify(array))
       })
       .catch(error => {
