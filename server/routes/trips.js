@@ -59,6 +59,7 @@ module.exports = () => {
           return arr.time > 0
         })
         modifiedArray.sort((a,b) => a.time - b.time)
+        console.log(modifiedArray)
         res.json(JSON.stringify(modifiedArray))
       })
       .catch(error => {
@@ -69,50 +70,36 @@ module.exports = () => {
     // TTC get Request. Used if a stop in TTC(Toronto) network is selected.
     const ttcGet = () => {
 
-      const key = process.env.TRANSITLAND_KEY;
-      let url = `https://transit.land/api/v2/rest/routes?&route_id=${req.query.route_id}&operator_onestop_id=${req.query.agency}&api_key=${key}`
-
-      const array = [];
+      let url = `https://retro.umoiq.com/service/publicJSONFeed?command=predictions&a=ttc&r=${req.query.route_num}&s=${req.query.stop_id}`
+      console.log(url)
 
       axios({
         method: "GET",
-        url: url,
-        responseType: "arraybuffer",
+        url: url
       })
       .then((res) => {
-        const routeData = res.data;
-        const routeString = routeData.toString();
-        const routeParse = JSON.parse(routeString);
-        const shortName = routeParse.routes[0].route_short_name;
-
-        url = `https://retro.umoiq.com/service/publicJSONFeed?command=predictions&a=ttc&r=${shortName}&s=${req.query.stop_id}`
-        console.log(url);
-        axios({
-          method: "GET",
-          url: url,
-          responseType: "arraybuffer",
+        const array = [];
+        const feed = res.data
+        console.log(feed);
+        feed.predictions.direction.prediction.forEach(element => {
+          console.log(element)
+          array.push({
+            stopId: feed.predictions.stopTag,
+            tripId: element.tripTag,
+            routeId: req.query.route_id,
+            time: element.minutes,
+            vehicleID: element.vehicle,
+          })
         })
-        .then((res) => {
-          const feed = res.data
-          const stringFeed = feed.toString();
-          const parsedFeed = JSON.parse(stringFeed)
-          parsedFeed.predictions.direction.prediction.forEach(element => {
-            array.push({
-              stopId: parsedFeed.predictions.stopTag,
-              tripId: element.tripTag,
-              routeId: req.query.route_id,
-              time: element.minutes,
-              vehicleID: element.vehicle
-            });
-          });
-        })
-        .then(() => {
-          res.json(JSON.stringify(array))
-        })
-        .catch(error => {
-          console.log(error.response)
-        })
-
+        console.log(array)
+        return array;
+      })
+      .then((array) => {
+        console.log(array);
+        res.json(JSON.stringify(array))
+      })
+      .catch(error => {
+        console.log(error.response)
       })
     }
 
