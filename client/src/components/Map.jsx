@@ -31,6 +31,7 @@ export const Map = (props) => {
   let routeId = props.route_id;
   // let agency = props.agency
   let agency = "ets";
+  // let agency = "ttc";
 
   // Mapbox config
   const mapKey = process.env.REACT_APP_MAPBOX_KEY;
@@ -52,7 +53,6 @@ export const Map = (props) => {
 
   const SetView = (lat, lon) => {
     if (map) {
-      console.log("panning........");
       map.panTo([lat, lon]);
     }
     return null;
@@ -102,7 +102,7 @@ export const Map = (props) => {
 
   useEffect(() => {
     axios
-      .get(`api/stopLocation/${stopId}`)
+      .get(`api/stopLocation/${agency}/${stopId}`)
       .then((res) => {
         if (Object.keys(res.data).length === 0) {
           console.log("NO STOPS FOUND!");
