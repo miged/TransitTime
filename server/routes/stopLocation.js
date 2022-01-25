@@ -3,10 +3,17 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = () => {
-  router.get("/:id", (req, res) => {
+  router.get("/:agency/:id", (req, res) => {
     const stopId = req.params.id;
+    const agency = req.params.agency;
     const key = process.env.TRANSITLAND_KEY;
-    const onestopId = "o-c3x-edmontontransitservice";
+    const onestopId = "";
+
+    if (agency == "ets") {
+      onestopId = "o-c3x-edmontontransitservice";
+    } else if (agency == "ttc") {
+      onestopId = "o-dpz8-ttc";
+    }
 
     axios
       .get(
