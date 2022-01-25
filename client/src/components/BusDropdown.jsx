@@ -53,6 +53,7 @@ export default function BusDropdown(props) {
               vehicle_id={props.vehicle_id}
               stop_code={props.stop_code}
               route_id={props.route_id}
+              agency={props.agency}
             />
           </Collapse>
         </TableCell>

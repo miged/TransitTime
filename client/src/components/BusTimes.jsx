@@ -60,6 +60,7 @@ export default function BusTimes(props) {
         route_name={times.route_name}
         time={data.time}
         vehicle_id={data.vehicleID}
+        agency={times.agency}
       />
     );
   });

@@ -68,7 +68,10 @@ module.exports = () => {
 
     // TTC get Request. Used if a stop in TTC(Toronto) network is selected.
     const ttcGet = () => {
-      const url = `https://retro.umoiq.com/service/publicJSONFeed?command=predictions&a=ttc&r=${req.params.route_id}&s=${req.params.stop_id}`
+
+      const key = process.env.TRANSITLAND_KEY;
+      let url = `https://transit.land/api/v2/rest/routes?&route_id=${req.query.route_id}&operator_onestop_id=${req.query.agency}&api_key=${key}`
+
       const array = [];
 
       axios({
@@ -77,25 +80,40 @@ module.exports = () => {
         responseType: "arraybuffer",
       })
       .then((res) => {
-        const feed = res.data
-        const stringFeed = feed.toString();
-        const parsedFeed = JSON.parse(stringFeed)
-        parsedFeed.predictions.direction.prediction.forEach(element => {
-          array.push({
-            stopId: parsedFeed.predictions.stopTag,
-            tripId: element.tripTag,
-            routeId: parsedFeed.predictions.routeTag,
-            time: element.minutes,
-            vehicleID: element.vehicle,
-            direction: parsedFeed.predictions.direction.title
+        const routeData = res.data;
+        const routeString = routeData.toString();
+        const routeParse = JSON.parse(routeString);
+        const shortName = routeParse.routes[0].route_short_name;
+
+        url = `https://retro.umoiq.com/service/publicJSONFeed?command=predictions&a=ttc&r=${shortName}&s=${req.query.stop_id}`
+        console.log(url);
+        axios({
+          method: "GET",
+          url: url,
+          responseType: "arraybuffer",
+        })
+        .then((res) => {
+          const feed = res.data
+          const stringFeed = feed.toString();
+          const parsedFeed = JSON.parse(stringFeed)
+          parsedFeed.predictions.direction.prediction.forEach(element => {
+            array.push({
+              stopId: parsedFeed.predictions.stopTag,
+              tripId: element.tripTag,
+              routeId: parsedFeed.predictions.routeTag,
+              time: element.minutes,
+              vehicleID: element.vehicle,
+              direction: parsedFeed.predictions.direction.title
+            });
           });
-        });
-      })
-      .then(() => {
-        res.json(JSON.stringify(array))
-      })
-      .catch(error => {
-        console.log(error.response)
+        })
+        .then(() => {
+          res.json(JSON.stringify(array))
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
+
       })
     }
 
