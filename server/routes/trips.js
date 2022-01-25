@@ -12,25 +12,16 @@ module.exports = () => {
 
   router.get('/', (req, res) => {
 
-    let url = 'http://gtfs.edmonton.ca/TMGTFSRealTimeWebService/TripUpdate/TripUpdates.pb'
-    // let url = 'https://data.calgary.ca/download/gs4m-mdc2/application%2Foctet-stream'
-    let timezone = 'America/Edmonton'
+    const etsGet = () => {
+      let url = 'http://gtfs.edmonton.ca/TMGTFSRealTimeWebService/TripUpdate/TripUpdates.pb'
+      let timezone = 'America/Edmonton'
+      const array = []
 
-    // if (params.query.onestop_id = "o-c3x-edmontontransitservice") {
-    //   url = 'http://gtfs.edmonton.ca/TMGTFSRealTimeWebService/TripUpdate/TripUpdates.pb'
-    //   timezone = 'America/Edmonton'
-    // } else if (params.query.onestop_id = "o-c3nf-calgarytransit") {
-    //   url = 'https://data.calgary.ca/download/gs4m-mdc2/application%2Foctet-stream'
-    //   timezone = 'America/Edmonton'
-    // }
-
-    const array = []
-
-    axios({
-      method: "GET",
-      url: url,
-      responseType: "arraybuffer",
-    })
+      axios({
+        method: "GET",
+        url: url,
+        responseType: "arraybuffer",
+      })
       .then((res) => {
         const feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(res.data);
         const currentDate = new Date(feed.header.timestamp.low *1000)
@@ -71,6 +62,49 @@ module.exports = () => {
       .catch(error => {
         console.log(error.response)
       })
+    };
+
+    const ttcGet = () => {
+      const url = `https://retro.umoiq.com/service/publicJSONFeed?command=predictions&a=ttc&r=${req.params.route_id}&s=${req.params.stop_id}`
+      const array = [];
+
+      axios({
+        method: "GET",
+        url: url,
+        responseType: "arraybuffer",
+      })
+      .then((res) => {
+        const feed = res.data
+        const stringFeed = feed.toString();
+        const parsedFeed = JSON.parse(stringFeed)
+        parsedFeed.predictions.direction.prediction.forEach(element => {
+          array.push({
+            stopId: parsedFeed.predictions.stopTag,
+            tripId: element.tripTag,
+            routeId: parsedFeed.predictions.routeTag,
+            time: element.minutes,
+            vehicleID: element.vehicle,
+            direction: parsedFeed.predictions.direction.title
+          });
+        });
+      })
+      .then(() => {
+        res.json(JSON.stringify(array))
+      })
+      .catch(error => {
+        console.log(error.response)
+      })
+    }
+
+    // Get rid of this. If (req.params.agency) when it works.
+    const agency = "o-c3x-edmontontransitservice"
+
+    if (agency === "o-dpz8-ttc") {
+      ttcGet();
+    } else if (agency === "o-c3x-edmontontransitservice") {
+      etsGet();
+    }
+
   });
 
   return router;
