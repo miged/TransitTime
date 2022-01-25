@@ -5,6 +5,7 @@ const GtfsRealtimeBindings = require('gtfs-realtime-bindings');
 
 module.exports = () => {
 
+  // Used so there is no "No 'Access-Control-Allow-Origin' header is present" error.
   router.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     next();
@@ -12,6 +13,7 @@ module.exports = () => {
 
   router.get('/', (req, res) => {
 
+    // ETS get Request. Used if a stop in ETS(Edmonton) network is selected.
     const etsGet = () => {
       let url = 'http://gtfs.edmonton.ca/TMGTFSRealTimeWebService/TripUpdate/TripUpdates.pb'
       let timezone = 'America/Edmonton'
@@ -64,6 +66,7 @@ module.exports = () => {
       })
     };
 
+    // TTC get Request. Used if a stop in TTC(Toronto) network is selected.
     const ttcGet = () => {
       const url = `https://retro.umoiq.com/service/publicJSONFeed?command=predictions&a=ttc&r=${req.params.route_id}&s=${req.params.stop_id}`
       const array = [];
