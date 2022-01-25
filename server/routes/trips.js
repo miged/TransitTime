@@ -99,12 +99,12 @@ module.exports = () => {
       })
     }
 
-    // Get rid of this. If (req.params.agency) when it works.
-    const agency = "o-c3x-edmontontransitservice"
-
-    if (agency === "o-dpz8-ttc") {
+    // Agency IF statement determines which get request is used. Currenty TTC works with NextBus
+    // JSON feeds while ETS uses a protocl buffer for realtime data. Other agencies can be added
+    // depending on data method.
+    if (req.query.agency === "o-dpz8-ttc") {
       ttcGet();
-    } else if (agency === "o-c3x-edmontontransitservice") {
+    } else if (req.query.agency === "o-c3x-edmontontransitservice") {
       etsGet();
     }
 
