@@ -38,7 +38,7 @@ export const StopResults = () => {
             route_id={r.route.route_id}
             route_num={r.route.route_short_name}
             route_name={r.route.route_long_name}
-            agency={r.route.agency.onestop_code}
+            agency={r.route.agency.onestop_id}
           />
         );
       } else {
