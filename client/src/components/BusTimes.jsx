@@ -37,7 +37,6 @@ export default function BusTimes(props) {
         },
       })
       .then((response) => {
-        console.log(response.data);
         let parsedFeeds = JSON.parse(response.data);
         setGTFS(parsedFeeds);
         setLoading(false);
@@ -64,7 +63,7 @@ export default function BusTimes(props) {
         time={data.time}
         vehicle_id={data.vehicleID}
         agency={times.agency}
-        short_name={data.shortName}
+        direction={data.direction}
       />
     );
   });
