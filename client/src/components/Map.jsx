@@ -29,9 +29,12 @@ export const Map = (props) => {
   let stopId = props.stop_code;
   let busId = props.vehicle_id;
   let routeId = props.route_id;
-  // let agency = props.agency
-  let agency = "ets";
-  // let agency = "ttc";
+  let agency = "";
+  if (props.agency == "o-c3x-edmontontransitservice") {
+    agency = "ets";
+  } else if (props.agency == "o-dpz8-ttc") {
+    agency = "ttc";
+  }
 
   // Mapbox config
   const mapKey = process.env.REACT_APP_MAPBOX_KEY;
@@ -72,8 +75,13 @@ export const Map = (props) => {
           }));
         }
         // Get time last updated
-        let timeDiff = Math.floor(Date.now() / 1000) - res.data.time.low;
-        setTimeUpdate((prev) => timeDiff);
+        if (agency == "ets") {
+          let timeDiff = Math.floor(Date.now() / 1000) - res.data.time.low;
+          setTimeUpdate((prev) => timeDiff);
+        } else if (agency == "ttc") {
+          console.log(res.data);
+          setTimeUpdate((prev) => res.data.secsSinceReport);
+        }
         return data;
       })
       .catch((err) => console.log(err));
