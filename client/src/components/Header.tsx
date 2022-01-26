@@ -22,7 +22,7 @@ export const Header = (props: any) => {
           fontWeight: 'bold',
         }}
       >
-        TransitTime
+        🚌 TransitTime
       </Typography>
       <IconButton
         sx={{ ml: 1 }}

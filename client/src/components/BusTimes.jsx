@@ -95,7 +95,11 @@ export default function BusTimes(props) {
             route={times.route_name}
           />
         </Paper>
-      ) : null}
+      ) : (
+        <Paper sx={{ py: 10, fontSize: 24 }} elevation={1}>
+          Search for a stop to get started.
+        </Paper>
+      )}
     </>
   );
 }
