@@ -70,7 +70,6 @@ module.exports = () => {
     const ttcGet = () => {
 
       let url = `https://retro.umoiq.com/service/publicJSONFeed?command=predictions&a=ttc&r=${req.query.route_num}&s=${req.query.stop_id}`
-      console.log(url)
 
       axios({
         method: "GET",
@@ -79,19 +78,34 @@ module.exports = () => {
       .then((res) => {
         const array = [];
         const feed = res.data
-        if (feed.predictions.dirTitleBecauseNoPredictions) {
+        if (feed.Error) {
           return array;
-        }
-        feed.predictions.direction.prediction.forEach(element => {
-          array.push({
-            stopId: feed.predictions.stopTag,
-            tripId: element.tripTag,
-            routeId: req.query.route_id,
-            time: element.minutes,
-            vehicleID: element.vehicle,
-            direction: feed.predictions.direction.title
+        } else if (feed.predictions.dirTitleBecauseNoPredictions) {
+          return array;
+        } else if (feed.predictions.direction instanceof Array) {
+          feed.predictions.direction.forEach(element => {
+            array.push({
+              stopId: feed.predictions.stopTag,
+              tripId: element.prediction.tripTag,
+              routeId: req.query.route_id,
+              time: element.prediction.minutes,
+              vehicleID: element.prediction.vehicle,
+              direction: element.title
+            })
           })
-        })
+        } else {
+            feed.predictions.direction.prediction.forEach(element => {
+              array.push({
+                stopId: feed.predictions.stopTag,
+                tripId: element.tripTag,
+                routeId: req.query.route_id,
+                time: element.minutes,
+                vehicleID: element.vehicle,
+                direction: feed.predictions.direction.title
+              })
+            })
+        }
+
         return array;
       })
       .then((array) => {
