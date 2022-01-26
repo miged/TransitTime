@@ -68,7 +68,12 @@ export const StopCard = (props: Props) => {
           agency={props.agency}
         />
       </Box>
-      <Button disableElevation variant="contained" onClick={showTimesClick}>
+      <Button
+        sx={{ mt: 0.5 }}
+        disableElevation
+        variant="contained"
+        onClick={showTimesClick}
+      >
         Show Times
       </Button>
     </Card>
