@@ -28,12 +28,14 @@ export const Map = (props) => {
 
   let stopId = props.stop_code;
   let busId = props.vehicle_id;
-  let routeId = props.route_id;
+  let routeId = "";
   let agency = "";
   if (props.agency == "o-c3x-edmontontransitservice") {
     agency = "ets";
+    routeId = props.route_id;
   } else if (props.agency == "o-dpz8-ttc") {
     agency = "ttc";
+    routeId = props.route_num;
   }
 
   // Mapbox config
@@ -74,7 +76,7 @@ export const Map = (props) => {
             lon: data.longitude,
           }));
         }
-        // Get time last updated
+        // Get time last bus pos updated
         if (agency == "ets") {
           let timeDiff = Math.floor(Date.now() / 1000) - res.data.time.low;
           setTimeUpdate((prev) => timeDiff);
@@ -89,7 +91,7 @@ export const Map = (props) => {
 
   const fetchRoute = () => {
     axios
-      .get(`api/busRoute/${routeId}`)
+      .get(`api/busRoute/${agency}/${routeId}`)
       .then((res) => {
         let stopMarkers = res.data.map((obj) => {
           return (
