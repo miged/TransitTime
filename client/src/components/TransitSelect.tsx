@@ -10,7 +10,7 @@ export interface Props {
 export const TransitSelect = (props: Props) => {
   const dispatch = useAppDispatch();
   const [transit, setTransit] = React.useState(
-    'Edmonton Transit Service (ETS)'
+    'Toronto Transit Commission (TTC)'
   );
 
   const transits = [
