@@ -79,7 +79,7 @@ export default function BusTimes(props) {
                 <TableCell>Route</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Destination</TableCell>
-                <TableCell>Time</TableCell>
+                <TableCell sx={{ width: 100 }}>Time</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
