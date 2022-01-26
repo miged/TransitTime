@@ -16,15 +16,16 @@ export const TransitSelect = (props: Props) => {
   const transits = [
     { id: 'o-dpz8-ttc', title: 'Toronto Transit Commission (TTC)' },
     {
-      id: 'o-f25d-socitdetransportdemontral',
-      title: 'Société de transport de Montréal (STM)',
-    },
-    {
       id: 'o-c3x-edmontontransitservice',
       title: 'Edmonton Transit Service (ETS)',
     },
-    { id: 'o-c3nf-calgarytransit', title: 'Calgary Transit' },
-    { id: 'o-c28-translink', title: 'Vancouver TransLink' },
+    // { id: 'o-dxfy-halifaxtransit~hrm', title: 'Halifax Transit' },
+    // {
+    //   id: 'o-f25d-socitdetransportdemontral',
+    //   title: 'Société de transport de Montréal (STM)',
+    // },
+    // { id: 'o-c3nf-calgarytransit', title: 'Calgary Transit' },
+    // { id: 'o-c28-translink', title: 'Vancouver TransLink' },
   ];
 
   return (
