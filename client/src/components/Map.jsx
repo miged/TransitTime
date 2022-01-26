@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from 'react';
-import L from 'leaflet';
+import { useState, useEffect } from "react";
+import L from "leaflet";
 import {
   MapContainer,
   TileLayer,
@@ -8,9 +8,9 @@ import {
   Popup,
   Tooltip,
   Circle,
-} from 'react-leaflet';
-import axios from 'axios';
-import useInterval from 'react-useinterval';
+} from "react-leaflet";
+import axios from "axios";
+import useInterval from "react-useinterval";
 
 export const Map = (props) => {
   let [map, setMap] = useState(null);
@@ -28,30 +28,30 @@ export const Map = (props) => {
 
   let stopId = props.stop_code;
   let busId = props.vehicle_id;
-  let routeId = '';
-  let agency = '';
-  if (props.agency === 'o-c3x-edmontontransitservice') {
-    agency = 'ets';
+  let routeId = "";
+  let agency = "";
+  if (props.agency === "o-c3x-edmontontransitservice") {
+    agency = "ets";
     routeId = props.route_id;
-  } else if (props.agency === 'o-dpz8-ttc') {
-    agency = 'ttc';
+  } else if (props.agency === "o-dpz8-ttc") {
+    agency = "ttc";
     routeId = props.route_num;
   }
 
   // Mapbox config
   const mapKey = process.env.REACT_APP_MAPBOX_KEY;
-  let style = 'ckyqkh1f811fy14k876mhrntc';
+  let style = "ckyqkh1f811fy14k876mhrntc";
 
   const point = L.point(0, -18);
 
   const busIcon = L.icon({
-    iconUrl: './assets/bus_pos.png',
-    iconSize: [24.4, 28],
-    iconAnchor: [12.2, 28],
+    iconUrl: "./assets/bus-white.png",
+    iconSize: [26, 26],
+    iconAnchor: [15, 15],
   });
 
   const stopIcon = L.icon({
-    iconUrl: './assets/stop_icon.png',
+    iconUrl: "./assets/stop_icon.png",
     iconSize: [18, 18],
     iconAnchor: [9, 9],
   });
@@ -68,7 +68,7 @@ export const Map = (props) => {
       .get(`api/busLocation/${agency}/${busId}`)
       .then((res) => {
         let data = res.data.position;
-        console.log('Recieved from api: \nBus COORD: ', data);
+        console.log("Recieved from api: \nBus COORD: ", data);
         if (data) {
           setBusCoordinate((prev) => ({
             ...prev,
@@ -77,10 +77,10 @@ export const Map = (props) => {
           }));
         }
         // Get time last bus pos updated
-        if (agency === 'ets') {
+        if (agency === "ets") {
           let timeDiff = Math.floor(Date.now() / 1000) - res.data.time.low;
           setTimeUpdate((prev) => timeDiff);
-        } else if (agency === 'ttc') {
+        } else if (agency === "ttc") {
           console.log(res.data);
           setTimeUpdate((prev) => res.data.secsSinceReport);
         }
@@ -98,7 +98,7 @@ export const Map = (props) => {
             <Circle
               key={obj.stop_id}
               center={[obj.lat, obj.lon]}
-              pathOptions={{ color: 'yellow' }}
+              pathOptions={{ color: "yellow" }}
               radius={4}
             />
           );
@@ -115,7 +115,7 @@ export const Map = (props) => {
       .get(`api/stopLocation/${agency}/${stopId}`)
       .then((res) => {
         if (Object.keys(res.data).length === 0) {
-          console.log('NO STOPS FOUND!');
+          console.log("NO STOPS FOUND!");
         }
         if (Object.keys(res.data).length !== 0) {
           setStopCoordinate((prev) => ({
@@ -123,7 +123,7 @@ export const Map = (props) => {
             lat: Number(res.data.stop_lat),
             lon: Number(res.data.stop_lon),
           }));
-          console.log('Set stop COORD to:', stopCoordinate);
+          console.log("Set stop COORD to:", stopCoordinate);
         }
       })
       .catch((err) => console.log(err));
@@ -165,7 +165,7 @@ export const Map = (props) => {
         >
           <Tooltip
             permanent={true}
-            direction={'top'}
+            direction={"top"}
             opacity={0.8}
             offset={point}
           >
