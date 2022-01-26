@@ -50,5 +50,12 @@ module.exports = () => {
       .catch((err) => console.log(err));
   });
 
+  // TTC
+  // axios
+  //   .get(
+  //     `https://retro.umoiq.com/service/publicJSONFeed?command=routeConfig&a=ttc&r=${routeId}`
+  //   )
+  //   .then();
+
   return router;
 };

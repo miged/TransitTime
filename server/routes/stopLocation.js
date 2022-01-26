@@ -7,7 +7,7 @@ module.exports = () => {
     const stopId = req.params.id;
     const agency = req.params.agency;
     const key = process.env.TRANSITLAND_KEY;
-    const onestopId = "";
+    let onestopId = "";
 
     if (agency == "ets") {
       onestopId = "o-c3x-edmontontransitservice";
@@ -15,10 +15,10 @@ module.exports = () => {
       onestopId = "o-dpz8-ttc";
     }
 
+    let url = `https://transit.land/api/v2/rest/stops?api_key=${key}&served_by_onestop_ids=${onestopId}&stop_id=${stopId}`;
+    console.log(url);
     axios
-      .get(
-        `https://transit.land/api/v2/rest/stops?api_key=${key}&served_by_onestop_ids=${onestopId}&stop_id=${stopId}`
-      )
+      .get(url)
       .then((feed) => {
         return feed.data.stops[0].geometry.coordinates;
       })
