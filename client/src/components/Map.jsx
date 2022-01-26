@@ -147,7 +147,7 @@ export const Map = (props) => {
           });
         }}
         center={[busCoordinate.lat, busCoordinate.lon]}
-        zoom={12}
+        zoom={14}
         scrollWheelZoom={false}
       >
         <TileLayer
