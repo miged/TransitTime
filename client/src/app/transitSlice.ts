@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const transitSlice = createSlice({
   name: 'transit',
   initialState: {
-    id: 'o-c3x-edmontontransitservice',
+    id: 'o-dpz8-ttc',
   },
   reducers: {
     setTransitId: (state, action) => {
