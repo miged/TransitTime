@@ -79,6 +79,9 @@ module.exports = () => {
       .then((res) => {
         const array = [];
         const feed = res.data
+        if (feed.predictions.dirTitleBecauseNoPredictions) {
+          return array;
+        }
         feed.predictions.direction.prediction.forEach(element => {
           array.push({
             stopId: feed.predictions.stopTag,
