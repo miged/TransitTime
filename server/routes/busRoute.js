@@ -5,13 +5,13 @@ const { PrismaClient } = require("@prisma/client");
 
 module.exports = () => {
   router.get("/:agency/:id", (req, res) => {
-    const prisma = new PrismaClient();
     const routeId = req.params.id;
     const key = process.env.TRANSITLAND_KEY;
     let agency = req.params.agency;
     let onestopId = "";
 
     if (agency == "ets") {
+      const prisma = new PrismaClient();
       onestopId = "o-c3x-edmontontransitservice";
 
       axios
@@ -19,7 +19,6 @@ module.exports = () => {
           `https://transit.land/api/v2/rest/routes?api_key=${key}&operator_onestop_id=${onestopId}&route_id=${routeId}`
         )
         .then((feed) => {
-          console.log(`ROUTE DATA SENT FOR: ${routeId}`);
           let result = [];
           feed.data.routes[0].route_stops.forEach((element) => {
             result.push(element.stop.stop_id);
