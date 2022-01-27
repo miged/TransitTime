@@ -19,10 +19,18 @@ export const Header = (props: any) => {
       <Typography
         sx={{
           fontSize: 32,
+          px: 1,
+        }}
+      >
+        🚌
+      </Typography>
+      <Typography
+        sx={{
+          fontSize: 32,
           fontWeight: 'bold',
         }}
       >
-        🚌 TransitTime
+        TransitTime
       </Typography>
       <IconButton
         sx={{ ml: 1 }}
