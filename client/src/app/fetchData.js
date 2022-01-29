@@ -1,9 +1,11 @@
-import axios from "axios";
-import { Circle } from "react-leaflet";
+import axios from 'axios';
+import { Circle } from 'react-leaflet';
+
+const url = process.env.REACT_APP_API_URL;
 
 export const fetchBus = (busId, agency, setBusCoordinate, setTimeUpdate) => {
   return axios
-    .get(`api/busLocation/${agency}/${busId}`)
+    .get(`${url}/busLocation/${agency}/${busId}`)
     .then((res) => {
       let data = res.data.position;
       if (data) {
@@ -14,10 +16,10 @@ export const fetchBus = (busId, agency, setBusCoordinate, setTimeUpdate) => {
         }));
       }
       // Get time last bus pos updated
-      if (agency === "ets") {
+      if (agency === 'ets') {
         let timeDiff = Math.floor(Date.now() / 1000) - res.data.time.low;
         setTimeUpdate((prev) => timeDiff);
-      } else if (agency === "ttc") {
+      } else if (agency === 'ttc') {
         setTimeUpdate((prev) => res.data.secsSinceReport);
       }
       return data;
@@ -27,14 +29,14 @@ export const fetchBus = (busId, agency, setBusCoordinate, setTimeUpdate) => {
 
 export const fetchRoute = (routeId, agency, setRouteMarkers) => {
   axios
-    .get(`api/busRoute/${agency}/${routeId}`)
+    .get(`${url}/busRoute/${agency}/${routeId}`)
     .then((res) => {
       let stopMarkers = res.data.map((obj) => {
         return (
           <Circle
             key={obj.stop_id}
             center={[obj.lat, obj.lon]}
-            pathOptions={{ color: "yellow" }}
+            pathOptions={{ color: 'yellow' }}
             radius={4}
           />
         );
@@ -48,10 +50,10 @@ export const fetchRoute = (routeId, agency, setRouteMarkers) => {
 
 export const fetchStop = (stopId, agency, setStopCoordinate) => {
   axios
-    .get(`api/stopLocation/${agency}/${stopId}`)
+    .get(`${url}/stopLocation/${agency}/${stopId}`)
     .then((res) => {
       if (Object.keys(res.data).length === 0) {
-        console.log("NO STOPS FOUND!");
+        console.log('NO STOPS FOUND!');
       }
       if (Object.keys(res.data).length !== 0) {
         setStopCoordinate((prev) => ({
@@ -59,7 +61,7 @@ export const fetchStop = (stopId, agency, setStopCoordinate) => {
           lat: Number(res.data.stop_lat),
           lon: Number(res.data.stop_lon),
         }));
-        console.log("Set stop COORD to:", res.data.stop_lat, res.data.stop_lon);
+        console.log('Set stop COORD to:', res.data.stop_lat, res.data.stop_lon);
       }
     })
     .catch((err) => console.log(err));
