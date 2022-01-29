@@ -2,6 +2,8 @@
 
 TransitTime is a web app where you can look up transit data such as stop information, arrival predictions, and bus location.
 
+**DEMO:** https://transit-time.netlify.app/
+
 ## Supported Transit Agencies
 
 - Edmonton Transit Service
