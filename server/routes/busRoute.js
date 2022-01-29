@@ -4,6 +4,11 @@ const router = express.Router();
 const { PrismaClient } = require("@prisma/client");
 
 module.exports = () => {
+  router.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    next();
+  });
+
   router.get("/:agency/:id", (req, res) => {
     const routeId = req.params.id;
     const key = process.env.TRANSITLAND_KEY;

@@ -3,6 +3,11 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = () => {
+  router.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    next();
+  });
+
   router.get("/:agency/:id", (req, res) => {
     const stopId = req.params.id;
     const agency = req.params.agency;
@@ -15,8 +20,7 @@ module.exports = () => {
       onestopId = "o-dpz8-ttc";
     }
 
-    let url = `https://transit.land/api/v2/rest/stops?api_key=${key}&served_by_onestop_ids=${onestopId}&stop_id=${stopId}`;
-    console.log(url);
+    const url = `https://transit.land/api/v2/rest/stops?api_key=${key}&served_by_onestop_ids=${onestopId}&stop_id=${stopId}`;
     axios
       .get(url)
       .then((feed) => {
