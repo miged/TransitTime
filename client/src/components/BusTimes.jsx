@@ -27,8 +27,9 @@ export default function BusTimes(props) {
   }
 
   const refreshData = () => {
+    const url = process.env.REACT_APP_API_URL;
     axios
-      .get('http://localhost:8080/api/trips', {
+      .get(`${url}/trips`, {
         params: {
           stop_id: times.stop_id,
           route_id: times.route_id,
