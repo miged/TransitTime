@@ -10,7 +10,7 @@ TransitTime is a web app where you can look up transit data such as stop informa
 - Toronto Transit Commission
 
 ![Nearby Search](./docs/screen1.png)
-![Times Display](./docs/screen2.png)
+![Times Display](./docs/screen3.png)
 
 ## Project Setup
 
