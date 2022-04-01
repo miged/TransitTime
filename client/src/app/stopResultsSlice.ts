@@ -1,32 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface Location {
-  coordinates: number[];
-}
-
-interface RouteStop {
-  route: Route;
-}
-
-interface Route {
-  route_id: string;
-  route_short_name: string;
-  route_long_name: string;
-  agency: any;
-}
-
-interface Stop {
-  id: number;
-  stop_id: string;
-  stop_code: string;
-  stop_name: string;
-  route_stops: RouteStop[];
-  geometry: Location;
-}
-
 interface ResultsState {
-  searchResults: Stop[];
-  autocompleteResults: Stop[];
+  searchResults: any[];
+  autocompleteResults: any[];
   favourites: any[];
   times: Object;
   location: Coordinates;

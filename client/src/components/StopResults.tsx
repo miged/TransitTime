@@ -2,13 +2,32 @@ import { useAppSelector } from '../app/hooks';
 import { StopCard } from './StopCard';
 import { Box, Typography } from '@mui/material';
 
+interface Stop {
+  id: number;
+  stop_id: string;
+  stop_code: string;
+  stop_name: string;
+  route_stops: RouteStop[];
+}
+
+interface RouteStop {
+  route: Route;
+}
+
+interface Route {
+  route_id: string;
+  route_short_name: string;
+  route_long_name: string;
+  agency: any;
+}
+
 export const StopResults = () => {
   const stops = useAppSelector((state) => state.stopResults.searchResults);
   const maxResults = 50;
   let count = 0;
 
-  const results = stops.map((s) => {
-    return s.route_stops.map((r) => {
+  const results = stops.map((s: Stop) => {
+    return s.route_stops.map((r: RouteStop) => {
       if (count !== maxResults) {
         count += 1;
         return (
