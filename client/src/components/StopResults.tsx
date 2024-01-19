@@ -27,25 +27,29 @@ export const StopResults = () => {
   let count = 0;
 
   const results = stops.map((s: Stop) => {
+    if (!s.route_stops) {
+      return null;
+    }
+
     return s.route_stops.map((r: RouteStop) => {
-      if (count !== maxResults) {
-        count += 1;
-        return (
-          <StopCard
-            sx={{ my: 1 }}
-            key={s.id + r.route.route_short_name}
-            stop_id={s.stop_id}
-            stop_code={s.stop_code}
-            stop_name={s.stop_name}
-            route_id={r.route.route_id}
-            route_num={r.route.route_short_name}
-            route_name={r.route.route_long_name}
-            agency={r.route.agency.onestop_id}
-          />
-        );
-      } else {
+      if (count === maxResults) {
         return null;
       }
+
+      count += 1;
+      return (
+        <StopCard
+          sx={{ my: 1 }}
+          key={s.id + r.route.route_short_name}
+          stop_id={s.stop_id}
+          stop_code={s.stop_code}
+          stop_name={s.stop_name}
+          route_id={r.route.route_id}
+          route_num={r.route.route_short_name}
+          route_name={r.route.route_long_name}
+          agency={r.route.agency.onestop_id}
+        />
+      );
     });
   });
 
